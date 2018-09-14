@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: asd
+    username: game
+    password: game
+
+game:
+  cors:
+    http:
+      allowedOrigins: http://localhost:4200
+        allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT
