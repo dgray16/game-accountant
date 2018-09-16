@@ -27,8 +27,7 @@ public class ReactiveSecurityConfig {
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
-                .pathMatchers("/**")
-                .permitAll();
+                .anyExchange().permitAll();
 
         return http.build();
     }

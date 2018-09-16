@@ -1,11 +1,11 @@
 spring:
-  datasource:
-    url: asd
-    username: game
-    password: game
-
+  data:
+    mongodb:
+      database: game_accountant
+      host: localhost
+      port: 27017
 game:
   cors:
     http:
       allowedOrigins: http://localhost:4200
-        allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT
+      allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT

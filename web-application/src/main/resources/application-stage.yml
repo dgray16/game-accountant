@@ -8,4 +8,4 @@ game:
   cors:
     http:
       allowedOrigins:
-        allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT
+      allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT

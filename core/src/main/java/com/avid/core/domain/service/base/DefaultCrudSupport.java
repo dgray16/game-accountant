@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;
@@ -43,7 +43,7 @@ public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> impleme
 
     @Override
     public Page<E> findAll(Pageable pageable) {
-        return ((JpaRepository<E, Long>) repository).findAll(pageable);
+        return ((MongoRepository<E, Long>) repository).findAll(pageable);
     }
 
     @Override
