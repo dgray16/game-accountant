@@ -2,18 +2,17 @@ package com.avid.core.domain.service.base;
 
 import com.avid.core.domain.model.base.AbstractIdentifiable;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Default implementation of {@link CrudSupport} which simply delegates
@@ -22,37 +21,37 @@ import java.util.Optional;
 @AllArgsConstructor
 public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> implements CrudSupport<E> {
 
-    private CrudRepository<E, Long> repository;
+    private ReactiveCrudRepository<E, Long> repository;
 
     @Override
-    public Optional<E> findById(Long entityId) {
+    public Mono<E> findById(Long entityId) {
         return repository.findById(entityId);
     }
 
     @Override
-    public E getById(Long entityId) {
+    public Mono<E> getById(Long entityId) {
         return repository
                 .findById(entityId)
-                .orElseThrow(() -> new EmptyResultDataAccessException("Entity was not found by ID: " + entityId, 1));
+                .doOnError(error -> new EmptyResultDataAccessException("Entity was not found by ID: " + entityId, 1));
     }
 
     @Override
-    public List<E> findAll() {
-        return Lists.newArrayList(repository.findAll());
+    public Flux<E> findAll() {
+        return repository.findAll();
     }
 
     @Override
-    public Page<E> findAll(Pageable pageable) {
-        return ((MongoRepository<E, Long>) repository).findAll(pageable);
+    public Flux<E> findAll(Example<E> example) {
+        return ((ReactiveMongoRepository<E, Long>) repository).findAll(example);
     }
 
     @Override
-    public List<E> findAll(Collection<Long> ids) {
-        return Lists.newArrayList(repository.findAllById(ids));
+    public Flux<E> findAll(Collection<Long> ids) {
+        return repository.findAllById(ids);
     }
 
     @Override
-    public E update(E entity) {
+    public Mono<E> update(E entity) {
         Preconditions.checkArgument(
                 Objects.nonNull(entity.getId()), "Could not update entity. Entity hasn't persisted yet"
         );
@@ -60,7 +59,7 @@ public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> impleme
     }
 
     @Override
-    public E create(E entity) {
+    public Mono<E> create(E entity) {
         Preconditions.checkArgument(
                 Objects.isNull(entity.getId()), "Could not create entity. Entity has already exists"
         );
@@ -68,7 +67,7 @@ public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> impleme
     }
 
     @Override
-    public E save(E entity) {
+    public Mono<E> save(E entity) {
         return Objects.isNull(entity.getId()) ? create(entity) : update(entity);
     }
 

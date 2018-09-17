@@ -5,12 +5,10 @@ import com.avid.core.domain.service.PlayerService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-
+import reactor.core.publisher.Flux;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -20,16 +18,19 @@ public class ApplicationInitializator implements ApplicationListener {
 
     @Override
     public void onApplicationEvent(ApplicationEvent applicationEvent) {
-        List<Player> players = playerService.findAll();
+        Flux<Player> players = playerService.findAll();
 
-        if (players.isEmpty()) {
-            Player player = new Player();
-            player.setEmail("vova@player.com");
-            playerService.create(player);
+        players.hasElements().map(value -> {
+           if (BooleanUtils.isFalse(value)) {
+               Player player = new Player();
+               player.setEmail("vova@player.com");
+               playerService.create(player);
 
-            Player player1 = new Player();
-            player1.setEmail("vova1@player.com");
-            playerService.create(player1);
-        }
+               Player player1 = new Player();
+               player1.setEmail("vova1@player.com");
+               playerService.create(player1);
+           }
+           return null;
+        });
     }
 }

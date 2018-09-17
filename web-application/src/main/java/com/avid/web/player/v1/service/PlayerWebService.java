@@ -8,9 +8,7 @@ import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import reactor.core.publisher.Flux;
 
 @Service
 @AllArgsConstructor
@@ -22,10 +20,9 @@ public class PlayerWebService {
     ModelMapper modelMapper;
 
     @Transactional(readOnly = true)
-    public List<PlayerDTO> getPlayers() {
-        return playerService.findAll().stream()
-                .map(player -> modelMapper.map(player, PlayerDTO.class))
-                .collect(Collectors.toList());
+    public Flux<PlayerDTO> getPlayers() {
+        return playerService.findAll()
+                .map(player -> modelMapper.map(player, PlayerDTO.class));
     }
 
 }

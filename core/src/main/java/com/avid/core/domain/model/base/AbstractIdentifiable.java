@@ -3,6 +3,7 @@ package com.avid.core.domain.model.base;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -14,5 +15,5 @@ import org.springframework.data.annotation.Id;
 public abstract class AbstractIdentifiable {
 
     @Id
-    protected Long id;
+    protected ObjectId id;
 }

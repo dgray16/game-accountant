@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Getter
 @Setter
-@Document
+@Document(collection = "players")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Player extends AbstractIdentifiable {
 
