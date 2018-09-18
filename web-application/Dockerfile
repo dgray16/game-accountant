@@ -1,6 +1,4 @@
-# Regarding to issue with JDK9 we used JRE9
-# https://github.com/docker-library/openjdk/issues/145#issuecomment-388108030
-FROM openjdk:9-jre
+FROM openjdk:10-jre
 RUN apt-get update
 RUN apt-get install sudo
 COPY ./target/web-application.jar /
