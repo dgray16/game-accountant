@@ -2,8 +2,6 @@ spring:
   data:
     mongodb:
       database: game_accountant
-      host: localhost
-      port: 27017
 
 game:
   cors:
