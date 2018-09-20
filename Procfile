@@ -1,1 +1,1 @@
-web: java -jar -Dspring.profiles.active=stage target/web-application.jar
+web: java -jar -Dspring.profiles.active=stage web-application/target/web-application.jar
