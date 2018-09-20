@@ -16,9 +16,6 @@
             <encoder>
                 <pattern>%d{HH:mm:ss.SSS} [%thread] %yellow(%-5level) %magenta(%logger{5}) : %msg%n</pattern>
             </encoder>
-            <filter class="com.smarthealth.web.security.jwt.JwtExceptionFilter">
-                <exceptionClassName>com.smarthealth.web.system.exception.TokenExpiredException</exceptionClassName>
-            </filter>
         </appender>
 
         <root level="INFO">
@@ -76,9 +73,6 @@
             <encoder>
                 <pattern>%d{HH:mm:ss.SSS} [%thread] %yellow(%-5level) %magenta(%logger{5}) : %msg%n</pattern>
             </encoder>
-            <filter class="com.smarthealth.web.security.jwt.JwtExceptionFilter">
-                <exceptionClassName>com.smarthealth.web.system.exception.TokenExpiredException</exceptionClassName>
-            </filter>
         </appender>
 
         <logger name="com.avid.web" level="DEBUG"/>
