@@ -1,1 +1,1 @@
-web: java -jar -Dserver.port=8080 -Dspring.profiles.active=stage web-application/target/web-application.jar
+web: java -jar -Dserver.port=$PORT -Dspring.profiles.active=stage web-application/target/web-application.jar
