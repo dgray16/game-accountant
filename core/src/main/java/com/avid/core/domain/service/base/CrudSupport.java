@@ -1,6 +1,7 @@
 package com.avid.core.domain.service.base;
 
 import com.avid.core.domain.model.base.AbstractIdentifiable;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import reactor.core.publisher.Flux;
@@ -21,7 +22,7 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
      * @return the entity with the given id or {@literal Optional#empty()} if none found
      * @throws IllegalArgumentException if {@code id} is {@literal null}.
      */
-    Mono<E> findById(final Long entityId);
+    Mono<E> findById(final ObjectId entityId);
 
     /**
      * Retrieves an entity by its id.
@@ -30,7 +31,7 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
      * @return the entity with the given id
      * @throws org.springframework.dao.EmptyResultDataAccessException if entity is not found.
      */
-    Mono<E> getById(final Long entityId);
+    Mono<E> getById(final ObjectId entityId);
 
     /**
      * Returns all instances of the type.
@@ -53,7 +54,7 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
      * @param ids preferable implementation is {@link java.util.Set}
      * @return {@link List<E>} collection of entities
      */
-    Flux<E> findAll(Collection<Long> ids);
+    Flux<E> findAll(Collection<ObjectId> ids);
 
     /**
      * Updates an entity.
@@ -99,5 +100,5 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
      *
      * @param id unique identifier
      */
-    void delete(final Long id);
+    void delete(final ObjectId id);
 }

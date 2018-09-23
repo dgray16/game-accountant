@@ -5,6 +5,7 @@ public enum GameGenre {
     ACTION,
     SHOOTER,
     STRATEGY,
+    ADVENTURE,
     RACING
 
 }

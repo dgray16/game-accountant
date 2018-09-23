@@ -33,7 +33,7 @@
         </appender>
 
         <logger name="com.avid.web" level="DEBUG"/>
-        <logger name="org.springframework.data.mongodb" level="DEBUG"/>
+        <logger name="org.springframework.data.mongodb.core.ReactiveMongoTemplate" level="DEBUG"/>
 
         <root level="INFO">
             <appender-ref ref="STDOUT" />
