@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      database: game_accountant_test
+      host: localhost
+      port: 27018
+game:
+  cors:
+    http:
+      allowedOrigins: STUB
+      allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT
