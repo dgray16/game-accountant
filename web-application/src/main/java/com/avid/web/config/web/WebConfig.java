@@ -10,23 +10,21 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import java.util.List;
 
+@EnableWebFlux
 @Configuration
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig implements WebFluxConfigurer {
 
     CorsConfig corsConfig;
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings(org.springframework.web.reactive.config.CorsRegistry registry) {
         registry
                 .addMapping("/**")
                 .allowedOrigins(corsConfig.getHttpOrigins())
@@ -34,19 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * Configure and build {@link com.fasterxml.jackson.databind.ObjectMapper} for HTTP web server.
-     */
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
-    }
-
-    /**
-     * Configures primary {@link ObjectMapper} that will be used in HTTP Server and WebSocket Server.
-     *
-     * @see WebConfig#configureMessageConverters(List)
+     * Configures primary {@link ObjectMapper} that will be used in HTTP Server.
      */
     @Bean
     @Primary

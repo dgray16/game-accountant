@@ -48,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
-            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <artifactId>spring-restdocs-webtestclient</artifactId>
         </dependency>
 
         <!-- Dependencies for tests  -->
@@ -123,6 +123,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
