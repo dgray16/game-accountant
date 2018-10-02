@@ -14,7 +14,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-
 @EnableWebFlux
 @Configuration
 @AllArgsConstructor

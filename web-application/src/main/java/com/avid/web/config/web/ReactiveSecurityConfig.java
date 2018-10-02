@@ -27,7 +27,7 @@ public class ReactiveSecurityConfig {
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
-                    .pathMatchers("/api/**").authenticated();
+                    .pathMatchers("/api/**").permitAll();
 
         return http.build();
     }

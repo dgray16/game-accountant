@@ -1,6 +1,5 @@
 package com.avid.web.base;
 
-import com.avid.web.GameaccountantApplication;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,52 +9,46 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebTestClientBuilderCustomizer;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Getter
 @Setter
-@ActiveProfiles("test")
+@DataMongoTest
 @RunWith(SpringRunner.class)
+@ActiveProfiles(value = "local-test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-/*@AutoConfigureRestDocs*/
-/*@ContextConfiguration(classes = GameaccountantApplication.class)*/
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@EnableReactiveMongoRepositories(basePackages = "com.avid.core")
+@ComponentScan(basePackages = { "com.avid.core", "com.avid.web.game.v1", "com.avid.web.config.web"})
 public abstract class EmbeddedMongoTest {
 
-    /*@Rule
+    @Rule
     public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();
 
     @Autowired
-    ApplicationContext applicationContext;*/
-
-    @Autowired
-    WebTestClient webTestClient;
+    private ApplicationContext applicationContext;
 
     @Autowired
     MongoTemplate mongoTemplate;
 
-    /*@Before
-    public void setUp() {
-        this.webTestClient = WebTestClient
-                .bindToApplicationContext(applicationContext)
+    WebTestClient webTestClient;
+
+
+    @Before
+    public void setup() {
+        this.webTestClient = WebTestClient.bindToApplicationContext(applicationContext)
                 .configureClient()
-                .baseUrl("")
                 .filter(WebTestClientRestDocumentation.documentationConfiguration(restDocumentation))
                 .build();
-    }*/
+    }
 
     /**
      * NoSQL database makes possible to forget about foreign keys, so we can freely delete all collections.

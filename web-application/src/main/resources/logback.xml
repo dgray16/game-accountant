@@ -40,7 +40,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="test">
+    <springProfile name="local-test">
         <!-- Send debug messages to System.out -->
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <!-- By default, encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->

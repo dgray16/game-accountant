@@ -9,26 +9,19 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 
 import java.util.List;
 
 /**
- * Test for {@link GameController}.
+ * TestClass for {@link GameController}.
  */
-// webTestClient filter - JunitRestDocumentation
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GameTest extends EmbeddedMongoTest {
 
     @Autowired
     GameService gameService;
-
-    /*@Autowired
-    WebTestClient webTestClient;*/
 
     @Test
     public void testGetGames() {
@@ -37,15 +30,13 @@ public class GameTest extends EmbeddedMongoTest {
         game.setGenres(List.of(GameGenre.SHOOTER, GameGenre.SURVIVAL));
         gameService.create(game).subscribe();
 
-        /* TODO
-         * 2. REST DOCS!
-         */
         getWebTestClient().get().uri("/api/v1/games")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("[0].name").isEqualTo(game.getName());
+                .jsonPath("[0].name").isEqualTo(game.getName())
+                .consumeWith(WebTestClientRestDocumentation.document("test-smth"));
     }
 
 }
