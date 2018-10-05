@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 
 import java.util.List;
 
