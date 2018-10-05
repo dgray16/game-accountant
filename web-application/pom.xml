@@ -138,7 +138,7 @@
                 <executions>
                     <execution>
                         <id>generate-docs</id>
-                        <phase>package</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
@@ -149,10 +149,17 @@
                                 <snippets>${snippetsDirectory}</snippets>
                             </attributes>
                             <sourceDirectory>src/docs</sourceDirectory>
-                            <outputDirectory>${build.outputDirectory}/generated-docs</outputDirectory>
+                            <outputDirectory>${project.build.directory}/generated-docs</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.restdocs</groupId>
+                        <artifactId>spring-restdocs-asciidoctor</artifactId>
+                        <version>2.0.2.RELEASE</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>

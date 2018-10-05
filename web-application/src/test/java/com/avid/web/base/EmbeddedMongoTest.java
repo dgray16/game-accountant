@@ -16,25 +16,25 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Getter
 @Setter
-@RunWith(SpringRunner.class)
+/*@RunWith(SpringRunner.class)*/
 @ActiveProfiles(value = "local-test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+/*@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)*/
 public abstract class EmbeddedMongoTest {
 
-    @Autowired
+    /*@Autowired*/
     private ApplicationContext applicationContext;
 
-    @Autowired
+    /*@Autowired*/
     MongoTemplate mongoTemplate;
 
-    @Autowired
+    /*@Autowired*/
     WebTestClient webTestClient;
 
     /**
      * NoSQL database makes possible to forget about foreign keys, so we can freely delete all collections.
      */
-    @After
+    /*@After*/
     public void cleanDb() {
         mongoTemplate.getCollectionNames().forEach(mongoTemplate::dropCollection);
     }

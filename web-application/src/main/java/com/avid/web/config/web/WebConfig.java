@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 @EnableWebFlux
@@ -28,6 +29,13 @@ public class WebConfig implements WebFluxConfigurer {
                 .addMapping("/**")
                 .allowedOrigins(corsConfig.getHttpOrigins())
                 .allowedMethods(corsConfig.getHttpMethods());
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/docs/**")
+                .addResourceLocations("classpath:/static/docs/");
     }
 
     /**

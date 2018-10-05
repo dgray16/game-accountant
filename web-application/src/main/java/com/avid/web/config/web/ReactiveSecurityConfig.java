@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Slf4j
-@Order(1)   // In case of multiple security configurations
 @Configuration
 @AllArgsConstructor
 @EnableWebFluxSecurity
@@ -27,7 +26,7 @@ public class ReactiveSecurityConfig {
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
-                    .pathMatchers("/api/**").permitAll();
+                    .pathMatchers("/docs/**", "/api/**").permitAll();
 
         return http.build();
     }
