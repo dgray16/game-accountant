@@ -55,6 +55,7 @@
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
             <artifactId>spring-restdocs-webtestclient</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Dependencies for tests  -->
@@ -147,12 +148,39 @@
                             <attributes>
                                 <snippets>${snippetsDirectory}</snippets>
                             </attributes>
-                            <sourceDirectory>src/docs/asciidocs</sourceDirectory>
-                            <outputDirectory>target/generated-docs</outputDirectory>
+                            <sourceDirectory>src/docs</sourceDirectory>
+                            <outputDirectory>${build.outputDirectory}/generated-docs</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/static/docs
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.build.directory}/generated-docs
+                                    </directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

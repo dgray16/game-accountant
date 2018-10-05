@@ -1,10 +1,9 @@
-package com.avid.web.game;
+package com.avid.web.documentation;
 
 import com.avid.core.domain.model.dictionary.GameGenre;
 import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.service.GameService;
-import com.avid.web.base.EmbeddedMongoTest;
-import com.avid.web.game.v1.controller.GameController;
+import com.avid.web.base.EmbeddedMongoDocumentationTest;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.Test;
@@ -14,11 +13,8 @@ import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation
 
 import java.util.List;
 
-/**
- * TestClass for {@link GameController}.
- */
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GameTest extends EmbeddedMongoTest {
+public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationTest {
 
     @Autowired
     GameService gameService;
@@ -35,7 +31,8 @@ public class GameTest extends EmbeddedMongoTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("[0].name").isEqualTo(game.getName());
+                .jsonPath("[0].name").isEqualTo(game.getName())
+                .consumeWith(WebTestClientRestDocumentation.document("get-games"));
     }
 
 }
