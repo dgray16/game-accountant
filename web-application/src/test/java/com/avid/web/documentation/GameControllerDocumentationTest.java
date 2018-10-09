@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.hypermedia.HypermediaDocumentation;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 
 import java.util.List;
@@ -32,7 +33,14 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("[0].name").isEqualTo(game.getName())
-                .consumeWith(WebTestClientRestDocumentation.document("get-games"));
+                .consumeWith(
+                        WebTestClientRestDocumentation.document("get-games",
+                                HypermediaDocumentation.links(
+                                        getGameLinkExtractor(),
+                                        HypermediaDocumentation.linkWithRel("self").description("Get this game"),
+                                        HypermediaDocumentation.linkWithRel("delete").description("Delete this game")
+                                )
+                        ));
     }
 
 }
