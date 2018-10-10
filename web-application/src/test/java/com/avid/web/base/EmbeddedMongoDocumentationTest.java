@@ -4,7 +4,6 @@ import com.avid.web.config.GameLinkExtractor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,7 +28,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @ActiveProfiles(value = "local-test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EnableReactiveMongoRepositories(basePackages = "com.avid.core")
-@ComponentScan(basePackages = { "com.avid.core", "com.avid.web.game.v1", "com.avid.web.config.web"})
+@ComponentScan(basePackages = {"com.avid.core", "com.avid.web.game.v1", "com.avid.web.config.web"})
 public abstract class EmbeddedMongoDocumentationTest {
 
     @Rule
@@ -49,11 +49,16 @@ public abstract class EmbeddedMongoDocumentationTest {
     WebTestClient webTestClient;
 
 
+    protected abstract String getControllerName();
+
     @Before
     public void setup() {
         this.webTestClient = WebTestClient.bindToApplicationContext(applicationContext)
                 .configureClient()
-                .filter(WebTestClientRestDocumentation.documentationConfiguration(restDocumentation))
+                .filter(WebTestClientRestDocumentation
+                        .documentationConfiguration(restDocumentation)
+                        .operationPreprocessors().withResponseDefaults(Preprocessors.prettyPrint())
+                )
                 .build();
     }
 
@@ -63,6 +68,10 @@ public abstract class EmbeddedMongoDocumentationTest {
     @After
     public void cleanDb() {
         mongoTemplate.getCollectionNames().forEach(mongoTemplate::dropCollection);
+    }
+
+    protected String generateDocumentName(String methodName) {
+     return String.format("%s/%s", getControllerName(), methodName);
     }
 
 }

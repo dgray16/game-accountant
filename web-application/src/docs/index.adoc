@@ -1,1 +1,24 @@
-Hello world!
+= Game Accountant REST API
+:toc: left
+
+:sectlinks:
+:sectnums:
+
+= Game Controller
+
+== Get Games
+
+=== Curl request
+
+include::{snippets}/game-controller/get-games/curl-request.adoc[]
+=== HTTP response
+
+include::{snippets}/game-controller/get-games/http-response.adoc[]
+=== HTTP response fields
+
+include::{snippets}/game-controller/get-games/response-fields.adoc[]
+
+=== Hypermedia links
+include::{snippets}/game-controller/get-games/links.adoc[]
+
+//operation::get-games[snippets='curl-request,http-response,links,response-fields']

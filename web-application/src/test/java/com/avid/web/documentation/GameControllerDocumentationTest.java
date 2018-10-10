@@ -4,12 +4,14 @@ import com.avid.core.domain.model.dictionary.GameGenre;
 import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.service.GameService;
 import com.avid.web.base.EmbeddedMongoDocumentationTest;
+import com.avid.web.config.web.HATEOASRelationship;
+import com.avid.web.game.v1.model.GameDTO;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.hypermedia.HypermediaDocumentation;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 
 import java.util.List;
@@ -28,19 +30,27 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
         gameService.create(game).subscribe();
 
         getWebTestClient().get().uri("/api/v1/games")
-                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("[0].name").isEqualTo(game.getName())
+                .expectBodyList(GameDTO.class)
                 .consumeWith(
-                        WebTestClientRestDocumentation.document("get-games",
+                        WebTestClientRestDocumentation.document(generateDocumentName("get-games"),
                                 HypermediaDocumentation.links(
                                         getGameLinkExtractor(),
-                                        HypermediaDocumentation.linkWithRel("self").description("Get this game"),
-                                        HypermediaDocumentation.linkWithRel("delete").description("Delete this game")
+                                        HypermediaDocumentation.linkWithRel(HATEOASRelationship.SELF.getValue()).description("Get this game"),
+                                        HypermediaDocumentation.linkWithRel(HATEOASRelationship.DELETE.getValue()).description("Delete this game")
+                                ),
+                                PayloadDocumentation.responseFields(
+                                        PayloadDocumentation.fieldWithPath("[].name").description("Name of the Game"),
+                                        PayloadDocumentation.fieldWithPath("[].gameGenres").description("Genres of games"),
+                                        PayloadDocumentation.subsectionWithPath("[].links").description("Links to other resources")
                                 )
-                        ));
+                        )
+                );
     }
 
+    @Override
+    protected String getControllerName() {
+        return "game-controller";
+    }
 }
