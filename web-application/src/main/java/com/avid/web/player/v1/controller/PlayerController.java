@@ -16,7 +16,7 @@ public class PlayerController {
 
     PlayerWebService playerWebService;
 
-    @GetMapping(value = "/test")
+    @GetMapping(value = "/api/v1/players")
     public Flux<PlayerDTO> getPlayers() {
         return playerWebService.getPlayers();
     }

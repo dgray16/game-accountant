@@ -7,6 +7,7 @@ public enum GameGenre {
     STRATEGY,
     ADVENTURE,
     RACING,
-    SURVIVAL
+    SURVIVAL,
+    STEALTH
 
 }

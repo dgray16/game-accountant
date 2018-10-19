@@ -42,8 +42,8 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
                                 ),
                                 PayloadDocumentation.responseFields(
                                         PayloadDocumentation.fieldWithPath("[].name").description("Name of the Game"),
-                                        PayloadDocumentation.fieldWithPath("[].gameGenres").description("Genres of games"),
-                                        PayloadDocumentation.subsectionWithPath("[].links").description("Links to other resources")
+                                        PayloadDocumentation.fieldWithPath("[].gameGenres").description(generateEnumValuesDescription(GameGenre.values())),
+                                        PayloadDocumentation.subsectionWithPath("[].links").description(LINKS_DESCRIPTION)
                                 )
                         )
                 );

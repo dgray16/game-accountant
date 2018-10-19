@@ -4,21 +4,36 @@
 :sectlinks:
 :sectnums:
 
-= Game Controller
+== Game Controller
 
-== Get Games
+=== Get Games
 
-=== Curl request
+==== Curl request
 
 include::{snippets}/game-controller/get-games/curl-request.adoc[]
-=== HTTP response
+==== HTTP response
 
 include::{snippets}/game-controller/get-games/http-response.adoc[]
-=== HTTP response fields
+==== HTTP response fields
 
 include::{snippets}/game-controller/get-games/response-fields.adoc[]
 
-=== Hypermedia links
+==== Hypermedia links
 include::{snippets}/game-controller/get-games/links.adoc[]
+
+
+== Player Controller
+
+=== Get Players
+
+==== Curl request
+
+include::{snippets}/player-controller/get-players/curl-request.adoc[]
+==== HTTP response
+
+include::{snippets}/player-controller/get-players/http-response.adoc[]
+==== HTTP response fields
+
+include::{snippets}/player-controller/get-players/response-fields.adoc[]
 
 //operation::get-games[snippets='curl-request,http-response,links,response-fields']

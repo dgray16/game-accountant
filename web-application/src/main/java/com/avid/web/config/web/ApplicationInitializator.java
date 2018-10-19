@@ -48,10 +48,15 @@ public class ApplicationInitializator implements ApplicationListener<Application
     private void createGames() {
         gameService.findAll().hasElements().subscribe(value -> {
            if (BooleanUtils.isFalse(value)) {
-               Game game = new Game();
-               game.setName("Divinity: Original Sin 2");
-               game.setGenres(List.of(GameGenre.ADVENTURE));
-               gameService.create(game).subscribe();
+               Game game1 = new Game();
+               game1.setName("Divinity: Original Sin 2");
+               game1.setGenres(List.of(GameGenre.ADVENTURE));
+               gameService.create(game1).subscribe();
+
+               Game game2 = new Game();
+               game2.setName("Hitman: Absolution");
+               game2.setGenres(List.of(GameGenre.STEALTH));
+               gameService.create(game2).subscribe();
            }
         });
     }
