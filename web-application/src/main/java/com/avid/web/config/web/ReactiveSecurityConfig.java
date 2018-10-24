@@ -30,6 +30,10 @@ public class ReactiveSecurityConfig {
         return http.build();
     }
 
+    /* TODO Google Integration / WebAuthn ? */
+    /* TODO wait for Spring Boot 2.1 (30th of October 2018) */
+    /* https://github.com/spring-projects/spring-security/blob/master/samples/boot/oauth2login-webflux/src/main/java/sample/web/OAuth2LoginController.java */
+
     /**
      * @see <a href="https://docs.spring.io/spring-security/site/docs/5.0.8.RELEASE/reference/htmlsingle/#pe-dpe">Delegating Password Encoder</a>
      */

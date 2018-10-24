@@ -4,6 +4,10 @@ spring:
       database: game_accountant
       host: localhost
       port: 27017
+  security.oauth2.client.registration.google:
+    client-id: TODO
+    client-secret: TODO
+
 game:
   cors:
     http:
