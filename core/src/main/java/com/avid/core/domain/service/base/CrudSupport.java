@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Defines commonly used CRUD operations
+ * Defines commonly used CRUD operations.
  */
 public interface CrudSupport<E extends AbstractIdentifiable> {
 
@@ -41,9 +41,10 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
     Flux<E> findAll();
 
     /**
+     * TODO verify this method
      * Returns a {@link Page} of entities meeting the paging restriction provided in the {@code Pageable} object.
      *
-     * @param pageable offsets and limits
+     * @param example offsets and limits
      * @return a page of entities
      */
     Flux<E> findAll(Example<E> example);
@@ -91,14 +92,16 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
      * Removes an entity.
      *
      * @param entity entity to remove
+     * @return mono object to support reactive approach
      * @throws IllegalArgumentException if entity hasn't persisted yet
      */
-    void delete(final E entity);
+    Mono<Void> delete(final E entity);
 
     /**
      * Removes an entity by it's identifier.
      *
      * @param id unique identifier
+     * @return mono object to support reactive approach
      */
-    void delete(final ObjectId id);
+    Mono<Void> delete(final ObjectId id);
 }

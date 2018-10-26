@@ -25,6 +25,8 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WebConfig implements WebFluxConfigurer {
 
+    static final MediaType[] mediaTypes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_STREAM_JSON };
+
     CorsConfig corsConfig;
 
     @Override
@@ -47,8 +49,8 @@ public class WebConfig implements WebFluxConfigurer {
      */
     @Override
     public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
-        configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper(), MediaType.APPLICATION_JSON));
-        configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper(), MediaType.APPLICATION_JSON));
+        configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper(), mediaTypes));
+        configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper(), mediaTypes));
     }
 
     /**

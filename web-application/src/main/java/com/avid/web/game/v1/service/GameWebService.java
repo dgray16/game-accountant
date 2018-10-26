@@ -57,7 +57,7 @@ public class GameWebService {
                 });
     }
 
-    public void delete(ObjectId id) {
-        gameService.delete(id);
+    public Mono<Void> delete(ObjectId id) {
+        return gameService.delete(id);
     }
 }

@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,7 +16,7 @@ import java.util.Objects;
 
 /**
  * Default implementation of {@link CrudSupport} which simply delegates
- * CRUD operations to {@link CrudRepository}.
+ * CRUD operations to {@link org.springframework.data.repository.Repository}.
  */
 @AllArgsConstructor
 public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> implements CrudSupport<E> {
@@ -73,15 +72,15 @@ public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> impleme
     }
 
     @Override
-    public void delete(E entity) {
+    public Mono<Void> delete(E entity) {
         Preconditions.checkArgument(
                 Objects.nonNull(entity.getId()), "Could not delete entity. Entity hasn't persisted yet"
         );
-        repository.delete(entity);
+        return repository.delete(entity);
     }
 
     @Override
-    public void delete(ObjectId id) {
-        repository.deleteById(id);
+    public Mono<Void> delete(ObjectId id) {
+        return repository.deleteById(id);
     }
 }
