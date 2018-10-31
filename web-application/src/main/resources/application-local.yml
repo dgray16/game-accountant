@@ -11,5 +11,12 @@ spring:
 game:
   cors:
     http:
-      allowedOrigins: http://localhost:4200
-      allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT
+      allowedOrigins:
+        - http://localhost:4200
+      allowedMethods:
+        - PATCH
+        - GET
+        - POST
+        - DELETE
+        - OPTIONS
+        - PUT

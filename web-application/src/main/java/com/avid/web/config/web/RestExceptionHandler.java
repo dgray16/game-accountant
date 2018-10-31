@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.codec.ServerCodecConfigurer;
@@ -18,13 +19,13 @@ import reactor.core.publisher.Mono;
 
 /**
  * Global exception handler.
- * Take into account that {@link org.springframework.web.bind.annotation.ControllerAdvice} show work with Spring WebFlux.
  *
  * @see <a href="https://www.baeldung.com/spring-webflux-errors">Handling Errors</a>
  */
 @Slf4j
 @Component
 @Order(-2)
+@Profile("!local-test-documentation")
 public class RestExceptionHandler extends AbstractErrorWebExceptionHandler {
 
     public RestExceptionHandler(ErrorAttributes errorAttributes,
@@ -58,13 +59,11 @@ public class RestExceptionHandler extends AbstractErrorWebExceptionHandler {
     }
 
     private Mono<ServerResponse> defaultException(Throwable error) {
-        Mono<ServerResponse> result;
         log.error("Server error", error);
 
-        result = ServerResponse
+        return ServerResponse
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
-        return result;
     }
 
     private Mono<ServerResponse> unsupportedOperationException(Throwable error) {

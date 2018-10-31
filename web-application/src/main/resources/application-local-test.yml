@@ -8,4 +8,4 @@ game:
   cors:
     http:
       allowedOrigins: STUB
-      allowedMethods: PATCH, GET, POST, DELETE, OPTIONS, PUT
+      allowedMethods: STUB

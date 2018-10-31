@@ -1,0 +1,12 @@
+# This profile sets up lightweight Spring Context just for documentation purposes
+spring:
+  data:
+    mongodb:
+      database: game_accountant_test_documentation
+      host: localhost
+      port: 27019
+game:
+  cors:
+    http:
+      allowedOrigins: STUB
+      allowedMethods: STUB

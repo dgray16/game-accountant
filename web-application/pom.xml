@@ -25,7 +25,6 @@
             <artifactId>core</artifactId>
         </dependency>
 
-
         <!-- Security related dependencies -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -99,6 +98,11 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Other -->
         <dependency>
@@ -110,12 +114,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>4.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -21,7 +21,7 @@ public class PlayerControllerDocumentationTest extends EmbeddedMongoDocumentatio
     public void testGetPlayers() {
         Player player = new Player();
         player.setEmail("vova@player.com");
-        playerService.create(player).subscribe();
+        playerService.create(player).block();
 
         getWebTestClient().get().uri("/api/v1/players")
                 .exchange()

@@ -27,7 +27,7 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
         Game game = new Game();
         game.setName("PUBG");
         game.setGenres(List.of(GameGenre.SHOOTER, GameGenre.SURVIVAL));
-        gameService.create(game).subscribe();
+        gameService.create(game).block();
 
         getWebTestClient().get().uri("/api/v1/games")
                 .exchange()

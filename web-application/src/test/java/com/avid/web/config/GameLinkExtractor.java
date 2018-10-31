@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.restdocs.hypermedia.Link;
 import org.springframework.restdocs.hypermedia.LinkExtractor;
 import org.springframework.restdocs.operation.OperationResponse;
@@ -25,6 +26,7 @@ import java.util.Objects;
  *
  * @see org.springframework.restdocs.hypermedia.AbstractJsonLinkExtractor#extractLinks(OperationResponse)
  */
+@Slf4j
 @Component
 @AllArgsConstructor
 public class GameLinkExtractor implements LinkExtractor {
@@ -34,7 +36,7 @@ public class GameLinkExtractor implements LinkExtractor {
     @Override
     public Map<String, List<Link>> extractLinks(OperationResponse response) throws IOException {
         MultiValueMap<String, Link> extractedLinks = new LinkedMultiValueMap<>();
-        Object possibleLinks;
+        Object possibleLinks = new ArrayList<>();
 
         try {
             Map<String, Object> jsonContent = objectMapper.readValue(response.getContent(), Map.class);
@@ -43,24 +45,29 @@ public class GameLinkExtractor implements LinkExtractor {
             List<Object> jsonParts = new ArrayList<>();
             JsonNode jsonNode = objectMapper.readTree(response.getContent());
             JsonNode firstChild = jsonNode.get(0);
-            JsonNode nodeWithLinks = firstChild.get("links");
 
-            JavaType type = objectMapper.getTypeFactory().constructMapType(
-                    Map.class,
-                    objectMapper.getTypeFactory().constructType(String.class),
-                    objectMapper.getTypeFactory().constructType(String.class)
-            );
+            if (Objects.nonNull(firstChild)) {
+                JsonNode nodeWithLinks = firstChild.get("links");
 
-            nodeWithLinks.forEach(node -> {
-                Map<String, String> nodeValues = null;
-                try {
-                    nodeValues = objectMapper.readValue(node.toString(), type);
-                } catch (IOException e1) {
-                }
-                jsonParts.add(nodeValues);
-            });
+                JavaType type = objectMapper.getTypeFactory().constructMapType(
+                        Map.class,
+                        objectMapper.getTypeFactory().constructType(String.class),
+                        objectMapper.getTypeFactory().constructType(String.class)
+                );
 
-            possibleLinks = jsonParts;
+                nodeWithLinks.forEach(node -> {
+                    Map<String, String> nodeValues = null;
+                    try {
+                        nodeValues = objectMapper.readValue(node.toString(), type);
+                    } catch (IOException e1) {
+                    }
+                    jsonParts.add(nodeValues);
+                });
+
+                possibleLinks = jsonParts;
+            } else {
+                log.warn("jsonNode is null, this might be a timing issue");
+            }
         }
 
         if (possibleLinks instanceof Collection) {
