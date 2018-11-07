@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * 2. OAuth2 Authorization
  * 3. Logstash / Sentry
  * 4. Remove default user org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration#getOrDeducePassword(org.springframework.boot.autoconfigure.security.SecurityProperties.User, org.springframework.security.crypto.password.PasswordEncoder)
+ * 5. Jigsaw? ( https://www.youtube.com/watch?v=wX0zhalTgzQ )
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.avid")
