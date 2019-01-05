@@ -1,4 +1,4 @@
-package com.avid.web.game.v1.model;
+package com.avid.web.game.v1.model.dto;
 
 import com.avid.core.domain.model.dictionary.GameGenre;
 import lombok.AccessLevel;

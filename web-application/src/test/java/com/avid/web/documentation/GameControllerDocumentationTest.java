@@ -5,14 +5,16 @@ import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.service.GameService;
 import com.avid.web.base.EmbeddedMongoDocumentationTest;
 import com.avid.web.config.web.HATEOASRelationship;
-import com.avid.web.game.v1.model.GameDTO;
+import com.avid.web.game.v1.model.dto.GameDTO;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.hypermedia.HypermediaDocumentation;
 import org.springframework.restdocs.payload.PayloadDocumentation;
+import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -29,12 +31,16 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
         game.setGenres(List.of(GameGenre.SHOOTER, GameGenre.SURVIVAL));
         gameService.create(game).block();
 
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("")
+                .queryParam("query", game.getName());
+
         getWebTestClient().get().uri("/api/v1/games")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(GameDTO.class)
                 .consumeWith(
-                        WebTestClientRestDocumentation.document(generateDocumentName("get-games"),
+                        WebTestClientRestDocumentation.document(
+                                generateDocumentName("get-games"),
                                 HypermediaDocumentation.links(
                                         getGameLinkExtractor(),
                                         HypermediaDocumentation.linkWithRel(HATEOASRelationship.SELF.getValue()).description("Get this game"),
@@ -44,6 +50,9 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
                                         PayloadDocumentation.fieldWithPath("[].name").description("Name of the Game"),
                                         PayloadDocumentation.fieldWithPath("[].gameGenres").description(generateEnumValuesDescription(GameGenre.values())),
                                         PayloadDocumentation.subsectionWithPath("[].links").description(LINKS_DESCRIPTION)
+                                ),
+                                RequestDocumentation.requestParameters(
+                                        RequestDocumentation.parameterWithName("query").description("Name of Game for search").optional()
                                 )
                         )
                 );

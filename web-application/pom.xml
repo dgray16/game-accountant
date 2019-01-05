@@ -108,7 +108,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>2.2.0</version>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -164,11 +164,13 @@
                         </configuration>
                     </execution>
                 </executions>
+
+                <!-- https://mvnrepository.com/artifact/org.springframework.restdocs/spring-restdocs-asciidoctor -->
                 <dependencies>
                     <dependency>
                         <groupId>org.springframework.restdocs</groupId>
                         <artifactId>spring-restdocs-asciidoctor</artifactId>
-                        <version>2.0.2.RELEASE</version>
+                        <version>2.0.3.RELEASE</version>
                     </dependency>
                 </dependencies>
             </plugin>

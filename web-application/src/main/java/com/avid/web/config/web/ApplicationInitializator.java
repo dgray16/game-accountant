@@ -5,6 +5,7 @@ import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.model.entity.Player;
 import com.avid.core.domain.service.GameService;
 import com.avid.core.domain.service.PlayerService;
+import com.avid.web.solr.service.SolrGameService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +25,8 @@ public class ApplicationInitializator implements ApplicationListener<Application
 
     PlayerService playerService;
     GameService gameService;
+
+    SolrGameService solrGameService;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -51,12 +54,18 @@ public class ApplicationInitializator implements ApplicationListener<Application
                Game game1 = new Game();
                game1.setName("Divinity: Original Sin 2");
                game1.setGenres(List.of(GameGenre.ADVENTURE));
-               gameService.create(game1).subscribe();
+
+               gameService
+                       .create(game1)
+                       .subscribe(solrGameService::updateIndex);
 
                Game game2 = new Game();
                game2.setName("Hitman: Absolution");
                game2.setGenres(List.of(GameGenre.STEALTH));
-               gameService.create(game2).subscribe();
+
+               gameService
+                       .create(game2)
+                       .subscribe(solrGameService::updateIndex);
            }
         });
     }

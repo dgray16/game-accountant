@@ -8,10 +8,11 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 /**
  * TODO
  * 1. Micrometer / Actuator / Grafana
- * 2. OAuth2 Authorization
+ * 2. OAuth2 Authorization / WebAuthn
  * 3. Logstash / Sentry
  * 4. Remove default user org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration#getOrDeducePassword(org.springframework.boot.autoconfigure.security.SecurityProperties.User, org.springframework.security.crypto.password.PasswordEncoder)
  * 5. Jigsaw? ( https://www.youtube.com/watch?v=wX0zhalTgzQ )
+ * 6. HATEOAS full hostname
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.avid")
@@ -21,4 +22,5 @@ public class GameaccountantApplication {
     public static void main(String[] args) {
         SpringApplication.run(GameaccountantApplication.class, args);
     }
+
 }

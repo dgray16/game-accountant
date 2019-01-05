@@ -20,8 +20,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>10</java.version>
-        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
+        <java.version>11</java.version>
+        <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -43,7 +43,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>26.0-jre</version>
+                <version>27.0.1-jre</version>
             </dependency>
 
         </dependencies>

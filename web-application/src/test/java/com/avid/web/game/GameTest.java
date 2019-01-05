@@ -5,7 +5,7 @@ import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.service.GameService;
 import com.avid.web.base.EmbeddedMongoTest;
 import com.avid.web.game.v1.controller.GameController;
-import com.avid.web.game.v1.model.GameDTO;
+import com.avid.web.game.v1.model.dto.GameDTO;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.math.NumberUtils;
