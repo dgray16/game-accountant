@@ -1,4 +1,6 @@
-FROM openjdk:10-jre
+# Take into account that in current version of this application Heroku is not deploying with Docker
+# This file is just a template for future improvements
+FROM openjdk:11-jre
 RUN apt-get update
 RUN apt-get install sudo
 COPY ./target/web-application.jar /
