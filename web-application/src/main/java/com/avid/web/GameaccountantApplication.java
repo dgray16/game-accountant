@@ -12,9 +12,10 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * 3. Logstash / Sentry
  * 4. Remove default user org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration#getOrDeducePassword(org.springframework.boot.autoconfigure.security.SecurityProperties.User, org.springframework.security.crypto.password.PasswordEncoder)
  * 5. Jigsaw? ( https://www.youtube.com/watch?v=wX0zhalTgzQ )
- * 6. HATEOAS full hostname
+ * 6. HATEOAS full hostname (Ready, check ResourceLinkBuilder)
  * 7. Implement Solr on Heroku
  * 8. Fix documentation on Heroku
+ * 9. Implement RouterFunctions in functional style.
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.avid")
