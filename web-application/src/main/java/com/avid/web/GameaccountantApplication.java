@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * 6. HATEOAS full hostname (Ready, check ResourceLinkBuilder)
  * 7. Implement Solr on Heroku
  * 8. Fix documentation on Heroku
- * 9. Implement RouterFunctions in functional style.
+ * 9. Implement RouterFunctions in functional style ( https://www.youtube.com/watch?v=jCjrxG9pHZ8 )
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.avid")
