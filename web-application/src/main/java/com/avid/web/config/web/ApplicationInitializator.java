@@ -5,6 +5,7 @@ import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.model.entity.Player;
 import com.avid.core.domain.service.GameService;
 import com.avid.core.domain.service.PlayerService;
+import com.avid.web.solr.model.SolrGame;
 import com.avid.web.solr.service.SolrGameService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Profile("stage")
+@Profile("local")
 @Component
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -50,23 +51,28 @@ public class ApplicationInitializator implements ApplicationListener<Application
 
     private void createGames() {
         gameService.findAll().hasElements().subscribe(value -> {
-           if (BooleanUtils.isFalse(value)) {
-               Game game1 = new Game();
-               game1.setName("Divinity: Original Sin 2");
-               game1.setGenres(List.of(GameGenre.ADVENTURE));
+            
+            solrGameService.deleteData();
 
-               gameService
-                       .create(game1)
-                       .subscribe(solrGameService::updateIndex);
+            if (BooleanUtils.isFalse(value)) {
+                Game game1 = new Game();
+                game1.setName("Divinity: Original Sin 2");
+                game1.setGenres(List.of(GameGenre.ADVENTURE));
 
-               Game game2 = new Game();
-               game2.setName("Hitman: Absolution");
-               game2.setGenres(List.of(GameGenre.STEALTH));
+                gameService
+                        .create(game1)
+                        .map(SolrGame::of)
+                        .subscribe(solrGameService::createIndex);
 
-               gameService
-                       .create(game2)
-                       .subscribe(solrGameService::updateIndex);
-           }
+                Game game2 = new Game();
+                game2.setName("Hitman: Absolution");
+                game2.setGenres(List.of(GameGenre.STEALTH));
+
+                gameService
+                        .create(game2)
+                        .map(SolrGame::of)
+                        .subscribe(solrGameService::createIndex);
+            }
         });
     }
 }

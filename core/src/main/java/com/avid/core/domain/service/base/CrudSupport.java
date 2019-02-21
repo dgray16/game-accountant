@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Defines commonly used CRUD operations.
@@ -76,6 +77,15 @@ public interface CrudSupport<E extends AbstractIdentifiable> {
      * @throws IllegalArgumentException if entity has already persisted
      */
     Mono<E> create(final E entity);
+
+    /**
+     * Experimental approach to create entity in functional style (execute around pattern).
+     *
+     * Currently we are relying on Google Guava library,
+     * but if {@link com.google.common.reflect.TypeToken} will be removed, you can achieve it manually:
+     * {@code ((ParameterizedType) getClass().getGenericSuperclass()).getActualArguments()[0]}.
+     */
+    Mono<E> create(final Consumer<E> consumer);
 
     /**
      * Saves an entity.

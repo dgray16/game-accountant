@@ -106,14 +106,9 @@
 
         <!-- Other -->
         <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>2.3.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.2</version>
+            <version>4.3</version>
         </dependency>
 
 
@@ -143,9 +138,10 @@
             </plugin>
 
             <plugin>
+                <!-- https://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-maven-plugin -->
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.7.1</version>
                 <executions>
                     <execution>
                         <id>generate-docs</id>

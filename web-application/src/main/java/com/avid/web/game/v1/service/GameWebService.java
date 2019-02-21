@@ -11,7 +11,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.bson.types.ObjectId;
-import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.stereotype.Service;
@@ -29,8 +28,6 @@ public class GameWebService {
 
     SolrGameService solrGameService;
 
-    ModelMapper modelMapper;
-
     public Flux<GameDTO> getGames(GetGamesRequest request) {
         Flux<Game> games;
 
@@ -43,7 +40,10 @@ public class GameWebService {
 
         return games
                 .map(game -> {
-                    GameDTO dto = modelMapper.map(game, GameDTO.class);
+                    GameDTO dto = new GameDTO();
+
+                    dto.setName(game.getName());
+                    dto.setGameGenres(game.getGenres());
 
                     Link getLink = ControllerLinkBuilder
                             .linkTo(ControllerLinkBuilder.methodOn(GameController.class).getGame(game.getId()))
@@ -62,7 +62,10 @@ public class GameWebService {
     public Mono<GameDTO> getGame(ObjectId id) {
         return gameService.findById(id)
                 .map(game -> {
-                    GameDTO dto = modelMapper.map(game, GameDTO.class);
+                    GameDTO dto = new GameDTO();
+
+                    dto.setGameGenres(game.getGenres());
+                    dto.setName(game.getName());
 
                     Link deleteLink = ControllerLinkBuilder
                             .linkTo(ControllerLinkBuilder.methodOn(GameController.class).deleteGame(game.getId()))

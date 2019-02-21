@@ -2,7 +2,9 @@ package com.avid.core.domain.service.base;
 
 import com.avid.core.domain.model.base.AbstractIdentifiable;
 import com.google.common.base.Preconditions;
+import com.google.common.reflect.TypeToken;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.bson.types.ObjectId;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
@@ -13,6 +15,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Default implementation of {@link CrudSupport} which simply delegates
@@ -64,6 +67,15 @@ public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> impleme
                 Objects.isNull(entity.getId()), "Could not create entity. Entity has already exists"
         );
         return repository.save(entity);
+    }
+
+    @Override
+    @SneakyThrows
+    public Mono<E> create(Consumer<E> consumer) {
+        TypeToken<Object> typeToken = new TypeToken<>(getClass()) {};
+        E entityToBeCreated = (E) typeToken.getRawType().getDeclaredConstructor().newInstance();
+        consumer.accept(entityToBeCreated);
+        return create(entityToBeCreated);
     }
 
     @Override

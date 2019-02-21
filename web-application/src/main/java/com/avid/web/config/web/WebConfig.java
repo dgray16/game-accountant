@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -70,8 +69,4 @@ public class WebConfig implements WebFluxConfigurer {
         return builder.build();
     }
 
-    @Bean
-    ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 }
