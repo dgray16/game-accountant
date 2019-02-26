@@ -18,6 +18,9 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
+/**
+ * <a href="http://localhost:8080/docs/index.html">Docs link</a>
+ */
 @EnableWebFlux
 @Configuration
 @AllArgsConstructor
@@ -26,7 +29,7 @@ public class WebConfig implements WebFluxConfigurer {
 
     static final MediaType[] mediaTypes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_STREAM_JSON };
 
-    CorsConfig corsConfig;
+    AksoCorsConfig corsConfig;
 
     @Override
     public void addCorsMappings(org.springframework.web.reactive.config.CorsRegistry registry) {

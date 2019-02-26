@@ -13,13 +13,11 @@ import lombok.experimental.FieldDefaults;
 import org.bson.types.ObjectId;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Set;
 
-@Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GameWebService {

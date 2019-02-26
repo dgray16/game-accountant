@@ -5,9 +5,7 @@ import com.avid.core.domain.repository.PlayerRepository;
 import com.avid.core.domain.service.base.DefaultCrudSupport;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
 
-@Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PlayerService extends DefaultCrudSupport<Player> {
 

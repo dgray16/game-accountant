@@ -6,12 +6,10 @@ import com.avid.core.domain.service.base.DefaultCrudSupport;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.bson.types.ObjectId;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.Set;
 
-@Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GameService extends DefaultCrudSupport<Game> {
 
