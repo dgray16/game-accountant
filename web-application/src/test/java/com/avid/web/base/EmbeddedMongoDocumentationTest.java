@@ -1,6 +1,5 @@
 package com.avid.web.base;
 
-import com.avid.web.config.GameLinkExtractor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.junit.After;
@@ -46,9 +45,6 @@ public abstract class EmbeddedMongoDocumentationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private GameLinkExtractor gameLinkExtractor;
 
     private WebTestClient webTestClient;
 
