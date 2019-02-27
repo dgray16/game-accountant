@@ -72,7 +72,7 @@ public abstract class DefaultCrudSupport<E extends AbstractIdentifiable> impleme
     @Override
     @SneakyThrows
     public Mono<E> create(Consumer<E> consumer) {
-        TypeToken<Object> typeToken = new TypeToken<>(getClass()) {};
+        TypeToken<E> typeToken = new TypeToken<>(getClass()) {};
         E entityToBeCreated = (E) typeToken.getRawType().getDeclaredConstructor().newInstance();
         consumer.accept(entityToBeCreated);
         return create(entityToBeCreated);

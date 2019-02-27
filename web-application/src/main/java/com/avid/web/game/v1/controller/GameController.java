@@ -13,8 +13,10 @@ import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
@@ -33,11 +35,11 @@ public class GameController implements FunctionalController {
         ServerRequestConverter converter = supplier.get();
         return RouterFunctions
                 .route()
-                .path(
-                        "/api/v1/games",
-                        builder -> builder.GET(
-                                "",
-                                request -> getGames(converter.mapQueryParams(request, GetGamesRequest.class)))
+                .nest(
+                        RequestPredicates.path("/api/v1"),
+                        builder -> builder
+                                .GET("/games", request -> getGames(converter.mapQueryParams(request, GetGamesRequest.class)))
+                                .GET("/games/{id}", this::getGame)
                 )
                 .build();
     }
@@ -46,10 +48,9 @@ public class GameController implements FunctionalController {
         return ServerResponse.ok().body(gameWebService.getGames(request), GameDTO.class);
     }
 
-    /*@GetMapping(value = "/api/v1/game/{id}")*/
-    public Mono<ResponseEntity<GameDTO>> getGame(@PathVariable ObjectId id) {
-        return gameWebService.getGame(id)
-                .map(ResponseEntity::ok);
+    private Mono<ServerResponse> getGame(ServerRequest request) {
+        ObjectId id = new ObjectId(request.pathVariable("id"));
+        return ServerResponse.ok().body(gameWebService.getGame(id), GameDTO.class);
     }
 
     /*@DeleteMapping(value = "/api/v1/game/{id}")*/

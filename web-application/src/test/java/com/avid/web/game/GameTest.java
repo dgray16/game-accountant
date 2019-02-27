@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 
 import java.util.List;
 
@@ -36,12 +35,28 @@ public class GameTest extends EmbeddedMongoTest {
         expectedResponse.setName(game.getName());
 
         getWebTestClient().get().uri("/api/v1/games")
-                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(GameDTO.class)
                 .hasSize(NumberUtils.INTEGER_ONE)
-                .contains(expectedResponse);
+                .isEqualTo(List.of(expectedResponse));
+    }
+
+    @Test
+    public void testGetGame() {
+        gameService.create(game -> {
+           game.setName("Resident Evil 2");
+           game.setGenres(List.of(GameGenre.SURVIVAL));
+        }).subscribe(createdGame -> {
+            GameDTO expectedResponse = GameDTO.of(createdGame);
+
+            getWebTestClient().get().uri("/api/v1/games/{0}", createdGame.getId().toHexString())
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody(GameDTO.class)
+                    .isEqualTo(expectedResponse);
+
+        });
     }
 
 }

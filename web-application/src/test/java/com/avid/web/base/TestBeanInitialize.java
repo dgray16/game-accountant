@@ -35,6 +35,7 @@ public class TestBeanInitialize implements ApplicationContextInitializer<Generic
                 () -> {
                     Supplier<ServerRequestConverter> converter = () -> context.getBean(ServerRequestConverter.class);
 
+                    /* TODO Maybe define /api/v1 ; /api/v2 here? */
                     return context.getBean(GameController.class).defineRouter(converter)
                             .and(context.getBean(PlayerController.class).defineRouter(converter));
                 }

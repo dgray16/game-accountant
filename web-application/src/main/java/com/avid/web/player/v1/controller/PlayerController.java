@@ -7,9 +7,12 @@ import com.avid.web.player.v1.service.PlayerWebService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
@@ -26,12 +29,22 @@ public class PlayerController implements FunctionalController {
     public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestConverter> requestConverter) {
         return RouterFunctions
                 .route()
-                .path("/api/v1/players", builder -> builder.GET("", request -> getPlayers()))
+                .nest(
+                        RequestPredicates.path("/api/v1"),
+                        builder -> builder
+                                .GET("/players", request -> getPlayers())
+                                .GET("/players/{id}", this::getPlayer)
+                )
                 .build();
     }
 
     private Mono<ServerResponse> getPlayers() {
         return ServerResponse.ok().body(playerWebService.getPlayers(), PlayerDTO.class);
+    }
+
+    private Mono<ServerResponse> getPlayer(ServerRequest request) {
+        ObjectId playerId = new ObjectId(request.pathVariable("id"));
+        return ServerResponse.ok().body(playerWebService.getPlayer(playerId), PlayerDTO.class);
     }
 
 

@@ -9,13 +9,14 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 
 /**
  * TODO
- * 1. Micrometer / Actuator / Grafana
- * 2. OAuth2 Authorization / WebAuthn
- * 3. Logstash / Sentry
- * 4. Remove default user org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration#getOrDeducePassword(org.springframework.boot.autoconfigure.security.SecurityProperties.User, org.springframework.security.crypto.password.PasswordEncoder)
- * 5. Jigsaw? ( https://www.youtube.com/watch?v=wX0zhalTgzQ -- https://github.com/rzwitserloot/lombok/issues/1723 )
- * 7. Implement Solr on Heroku
- * 8. Fix documentation on Heroku
+ * - Micrometer / Actuator / Grafana
+ * - OAuth2 Authorization / WebAuthn
+ * - Logstash / Sentry
+ * - Remove default user org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration#getOrDeducePassword(org.springframework.boot.autoconfigure.security.SecurityProperties.User, org.springframework.security.crypto.password.PasswordEncoder)
+ * - Jigsaw? ( https://www.youtube.com/watch?v=wX0zhalTgzQ -- https://github.com/rzwitserloot/lombok/issues/1723 )
+ * - Implement Solr on Heroku
+ * - Fix documentation on Heroku
+ * - Programmatic transaction manager
  */
 @SpringBootApplication
 @EnableConfigurationProperties(value = {
