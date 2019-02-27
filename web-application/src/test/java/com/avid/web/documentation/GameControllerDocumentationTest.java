@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -28,9 +27,6 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
         game.setName("PUBG");
         game.setGenres(List.of(GameGenre.SHOOTER, GameGenre.SURVIVAL));
         gameService.create(game).block();
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("")
-                .queryParam("query", game.getName());
 
         getWebTestClient().get().uri("/api/v1/games")
                 .exchange()

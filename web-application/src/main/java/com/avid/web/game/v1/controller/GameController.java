@@ -28,6 +28,20 @@ public class GameController implements FunctionalController {
 
     GameWebService gameWebService;
 
+    @Override
+    public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestConverter> supplier) {
+        ServerRequestConverter converter = supplier.get();
+        return RouterFunctions
+                .route()
+                .path(
+                        "/api/v1/games",
+                        builder -> builder.GET(
+                                "",
+                                request -> getGames(converter.mapQueryParams(request, GetGamesRequest.class)))
+                )
+                .build();
+    }
+
     private Mono<ServerResponse> getGames(GetGamesRequest request) {
         return ServerResponse.ok().body(gameWebService.getGames(request), GameDTO.class);
     }
@@ -43,26 +57,5 @@ public class GameController implements FunctionalController {
         return gameWebService.delete(id)
                 .map(obj -> ResponseEntity.noContent().build());
     }
-
-    @Override
-    public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestConverter> supplier) {
-        ServerRequestConverter converter = supplier.get();
-        return RouterFunctions.route()
-                .path(
-                        "/api/v1/games",
-                        builder -> builder.GET(
-                                "",
-                                request -> getGames(converter.mapQueryParams(request, GetGamesRequest.class)))
-                )
-                .build();
-    }
-
-    /**
-     * curl -v -H "Accept:application/stream+json" http://localhost:8080/api/v1/games
-     */
-    /*@GetMapping(value = "/api/v1/games", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public ResponseEntity<Flux<GameDTO>> getGamesStream(@ModelAttribute GetGamesRequest request) {
-        return ResponseEntity.ok(gameWebService.getGames(request));
-    }*/
 
 }

@@ -15,6 +15,7 @@ import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -29,7 +30,8 @@ import java.util.stream.Collectors;
 @DataMongoTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles(value = "local-test-documentation")
-@ComponentScan(basePackages = {"com.avid.core", "com.avid.web.game.v1", "com.avid.web.config.web"})
+@ComponentScan(basePackages = {"com.avid.web.config.web"})
+@ContextConfiguration(initializers = { TestBeanInitialize.class })
 public abstract class EmbeddedMongoDocumentationTest {
 
     protected static final String LINKS_DESCRIPTION = "Links to other resources";
