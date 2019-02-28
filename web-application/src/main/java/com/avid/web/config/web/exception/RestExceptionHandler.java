@@ -1,4 +1,4 @@
-package com.avid.web.config.web;
+package com.avid.web.config.web.exception;
 
 import com.avid.web.system.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +18,9 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Global exception handler.
  *
@@ -28,6 +31,12 @@ import reactor.core.publisher.Mono;
 @Order(-2)
 @Profile("!local-test-documentation")
 public class RestExceptionHandler extends AbstractErrorWebExceptionHandler {
+
+    private static final List<ExceptionRule> EXCEPTION_RULES = List.of(
+            new ExceptionRule(UnsupportedOperationException.class, RestExceptionHandler::badRequest),
+            new ExceptionRule(BadRequestException.class, RestExceptionHandler::badRequest),
+            new ExceptionRule(SecurityException.class, RestExceptionHandler::forbidden)
+    );
 
     public RestExceptionHandler(ErrorAttributes errorAttributes,
                                 ApplicationContext applicationContext,
@@ -48,28 +57,20 @@ public class RestExceptionHandler extends AbstractErrorWebExceptionHandler {
     private Mono<ServerResponse> handleError(ServerRequest serverRequest) {
         Throwable error = getError(serverRequest);
 
-        Mono<ServerResponse> result;
-
-        if (error instanceof UnsupportedOperationException) {
-            result = badRequest(error);
-        } else if (error instanceof BadRequestException) {
-            result = badRequest(error);
-        } else if (error instanceof SecurityException) {
-            result = forbidden(error);
-        } else {
-            result = internalServerError(error);
-        }
-
-        return result;
+        return EXCEPTION_RULES.stream()
+                .map(exceptionRule -> exceptionRule.getResponse(error))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseGet(() -> internalServerError(error));
     }
 
-    private Mono<ServerResponse> badRequest(Throwable error) {
+    private static Mono<ServerResponse> badRequest(Throwable error) {
         return ServerResponse
                 .badRequest()
                 .body(Mono.just(error.getMessage()), String.class);
     }
 
-    private Mono<ServerResponse> forbidden(Throwable error) {
+    private static Mono<ServerResponse> forbidden(Throwable error) {
         return ServerResponse
                 .status(HttpStatus.FORBIDDEN)
                 .syncBody(error.getMessage());
