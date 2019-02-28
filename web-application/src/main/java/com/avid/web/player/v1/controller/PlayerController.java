@@ -1,7 +1,7 @@
 package com.avid.web.player.v1.controller;
 
 import com.avid.web.functional.FunctionalController;
-import com.avid.web.functional.ServerRequestConverter;
+import com.avid.web.functional.ServerRequestHelper;
 import com.avid.web.player.v1.model.PlayerDTO;
 import com.avid.web.player.v1.service.PlayerWebService;
 import lombok.AccessLevel;
@@ -26,7 +26,7 @@ public class PlayerController implements FunctionalController {
     PlayerWebService playerWebService;
 
     @Override
-    public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestConverter> requestConverter) {
+    public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestHelper> requestConverter) {
         return RouterFunctions
                 .route()
                 .nest(

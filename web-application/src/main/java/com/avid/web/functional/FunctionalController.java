@@ -8,6 +8,9 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface FunctionalController {
 
-    RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestConverter> requestConverter);
+    /**
+     * Convenient way to setup mappings for specific {@link org.springframework.stereotype.Controller}.
+     */
+    RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestHelper> requestConverter);
 
 }

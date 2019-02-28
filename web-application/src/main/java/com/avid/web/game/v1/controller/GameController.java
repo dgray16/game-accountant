@@ -1,7 +1,7 @@
 package com.avid.web.game.v1.controller;
 
 import com.avid.web.functional.FunctionalController;
-import com.avid.web.functional.ServerRequestConverter;
+import com.avid.web.functional.ServerRequestHelper;
 import com.avid.web.game.v1.model.dto.GameDTO;
 import com.avid.web.game.v1.model.request.GetGamesRequest;
 import com.avid.web.game.v1.service.GameWebService;
@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -31,20 +32,23 @@ public class GameController implements FunctionalController {
     GameWebService gameWebService;
 
     @Override
-    public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestConverter> supplier) {
-        ServerRequestConverter converter = supplier.get();
+    public RouterFunction<ServerResponse> defineRouter(Supplier<ServerRequestHelper> supplier) {
+        ServerRequestHelper converter = supplier.get();
         return RouterFunctions
                 .route()
                 .nest(
                         RequestPredicates.path("/api/v1"),
                         builder -> builder
-                                .GET("/games", request -> getGames(converter.mapQueryParams(request, GetGamesRequest.class)))
+                                .GET(
+                                        "/games",
+                                        request -> getGames(converter.mapQueryParamsWithValidation(request, GetGamesRequest.class))
+                                )
                                 .GET("/games/{id}", this::getGame)
                 )
                 .build();
     }
 
-    private Mono<ServerResponse> getGames(GetGamesRequest request) {
+    private Mono<ServerResponse> getGames(@Validated GetGamesRequest request) {
         return ServerResponse.ok().body(gameWebService.getGames(request), GameDTO.class);
     }
 

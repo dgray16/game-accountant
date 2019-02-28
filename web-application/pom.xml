@@ -55,6 +55,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Used for Hibernate Validation -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
+            <version>9.0.16</version>
+        </dependency>
+
         <!-- Dependencies for tests  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

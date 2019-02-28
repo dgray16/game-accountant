@@ -2,16 +2,18 @@ package com.avid.web.base;
 
 import com.avid.core.domain.service.GameService;
 import com.avid.core.domain.service.PlayerService;
-import com.avid.web.functional.ServerRequestConverter;
+import com.avid.web.functional.ServerRequestHelper;
 import com.avid.web.game.v1.controller.GameController;
 import com.avid.web.game.v1.service.GameWebService;
 import com.avid.web.player.v1.controller.PlayerController;
 import com.avid.web.player.v1.service.PlayerWebService;
 import com.avid.web.solr.service.SolrGameService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.web.reactive.function.server.RouterFunction;
 
+import javax.validation.Validation;
 import java.util.function.Supplier;
 
 public class TestBeanInitialize implements ApplicationContextInitializer<GenericApplicationContext> {
@@ -25,7 +27,12 @@ public class TestBeanInitialize implements ApplicationContextInitializer<Generic
     }
 
     private void registerControllers(GenericApplicationContext context) {
-        context.registerBean(ServerRequestConverter.class);
+        context.registerBean(
+                ServerRequestHelper.class,
+                () -> new ServerRequestHelper(
+                        context.getBean(ObjectMapper.class), Validation.buildDefaultValidatorFactory().getValidator()
+                )
+        );
 
         context.registerBean(GameController.class);
         context.registerBean(PlayerController.class);
@@ -33,7 +40,7 @@ public class TestBeanInitialize implements ApplicationContextInitializer<Generic
         context.registerBean(
                 RouterFunction.class,
                 () -> {
-                    Supplier<ServerRequestConverter> converter = () -> context.getBean(ServerRequestConverter.class);
+                    Supplier<ServerRequestHelper> converter = () -> context.getBean(ServerRequestHelper.class);
 
                     /* TODO Maybe define /api/v1 ; /api/v2 here? */
                     return context.getBean(GameController.class).defineRouter(converter)

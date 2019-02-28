@@ -1,5 +1,6 @@
 package com.avid.web.config.web;
 
+import com.avid.web.system.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
@@ -50,26 +51,36 @@ public class RestExceptionHandler extends AbstractErrorWebExceptionHandler {
         Mono<ServerResponse> result;
 
         if (error instanceof UnsupportedOperationException) {
-            result = unsupportedOperationException(error);
+            result = badRequest(error);
+        } else if (error instanceof BadRequestException) {
+            result = badRequest(error);
+        } else if (error instanceof SecurityException) {
+            result = forbidden(error);
         } else {
-            result = defaultException(error);
+            result = internalServerError(error);
         }
 
         return result;
     }
 
-    private Mono<ServerResponse> defaultException(Throwable error) {
+    private Mono<ServerResponse> badRequest(Throwable error) {
+        return ServerResponse
+                .badRequest()
+                .body(Mono.just(error.getMessage()), String.class);
+    }
+
+    private Mono<ServerResponse> forbidden(Throwable error) {
+        return ServerResponse
+                .status(HttpStatus.FORBIDDEN)
+                .syncBody(error.getMessage());
+    }
+
+    private Mono<ServerResponse> internalServerError(Throwable error) {
         log.error("Server error", error);
 
         return ServerResponse
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
-    }
-
-    private Mono<ServerResponse> unsupportedOperationException(Throwable error) {
-        return ServerResponse
-                .badRequest()
-                .syncBody(error.getMessage());
     }
 
 }
