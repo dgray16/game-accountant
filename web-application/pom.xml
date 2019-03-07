@@ -108,7 +108,6 @@
             <version>4.3</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-solr</artifactId>

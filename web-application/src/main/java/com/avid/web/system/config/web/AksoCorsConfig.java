@@ -1,4 +1,4 @@
-package com.avid.web.config.web;
+package com.avid.web.system.config.web;
 
 import lombok.AccessLevel;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.avid.web.config.web;
+package com.avid.web.system.config.web;
 
 import com.avid.core.domain.model.dictionary.GameGenre;
 import com.avid.core.domain.model.entity.Game;

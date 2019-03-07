@@ -1,4 +1,4 @@
-package com.avid.web.config.web;
+package com.avid.web.system.config.web;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;

@@ -1,4 +1,4 @@
-package com.avid.web.functional;
+package com.avid.web.system.functional;
 
 import com.avid.web.system.exception.BadRequestException;
 import com.fasterxml.jackson.databind.ObjectMapper;

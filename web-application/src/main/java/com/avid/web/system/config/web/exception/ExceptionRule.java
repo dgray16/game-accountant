@@ -1,4 +1,4 @@
-package com.avid.web.config.web.exception;
+package com.avid.web.system.config.web.exception;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.avid.web.functional;
+package com.avid.web.system.functional;
 
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;

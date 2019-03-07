@@ -1,5 +1,6 @@
 package com.avid.web.base;
 
+import com.avid.web.system.config.web.ApplicationBeanInitializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.junit.After;
@@ -30,8 +31,8 @@ import java.util.stream.Collectors;
 @DataMongoTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles(value = "local-test-documentation")
-@ComponentScan(basePackages = {"com.avid.web.config.web"})
-@ContextConfiguration(initializers = { TestBeanInitialize.class })
+@ComponentScan(basePackages = {"com.avid.web.system.config.web"})
+@ContextConfiguration(initializers = { ApplicationBeanInitializer.class })
 public abstract class EmbeddedMongoDocumentationTest {
 
     protected static final String LINKS_DESCRIPTION = "Links to other resources";

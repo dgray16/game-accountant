@@ -1,7 +1,7 @@
 package com.avid.web.game.v1.controller;
 
-import com.avid.web.functional.FunctionalController;
-import com.avid.web.functional.ServerRequestHelper;
+import com.avid.web.system.functional.FunctionalController;
+import com.avid.web.system.functional.ServerRequestHelper;
 import com.avid.web.game.v1.model.dto.GameDTO;
 import com.avid.web.game.v1.model.request.GetGamesRequest;
 import com.avid.web.game.v1.service.GameWebService;

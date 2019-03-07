@@ -1,4 +1,4 @@
-package com.avid.web.config.web.exception;
+package com.avid.web.system.config.web.exception;
 
 import com.avid.web.system.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
@@ -7,10 +7,9 @@ import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWe
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.codec.ServerCodecConfigurer;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -24,11 +23,11 @@ import java.util.Objects;
 /**
  * Global exception handler.
  *
- * @see <a href="https://www.baeldung.com/spring-webflux-errors">Handling Errors</a>
+ * {@link AbstractErrorWebExceptionHandler} used only for this method:
+ * #{@link AbstractErrorWebExceptionHandler#getError(ServerRequest)}.
  */
 @Slf4j
-@Component
-@Order(-2)
+@RestControllerAdvice
 @Profile("!local-test-documentation")
 public class RestExceptionHandler extends AbstractErrorWebExceptionHandler {
 

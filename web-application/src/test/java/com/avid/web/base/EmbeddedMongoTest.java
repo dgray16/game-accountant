@@ -1,5 +1,6 @@
 package com.avid.web.base;
 
+import com.avid.web.system.config.web.ApplicationBeanInitializer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @RunWith(SpringRunner.class)
 @ActiveProfiles(value = "local-test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@ContextConfiguration(initializers = { TestBeanInitialize.class })
+@ContextConfiguration(initializers = { ApplicationBeanInitializer.class })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class EmbeddedMongoTest {
 

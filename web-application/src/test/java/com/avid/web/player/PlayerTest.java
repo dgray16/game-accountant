@@ -9,6 +9,8 @@ import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,22 +23,26 @@ public class PlayerTest extends EmbeddedMongoTest {
 
     @Test
     public void testGetPlayers() {
-        playerService.create(player -> player.setEmail("vova@test.com")).subscribe();
-        playerService.create(player -> player.setEmail("antony@test.com")).subscribe();
+        Mono<Player> firstPlayer = playerService.create(player -> player.setEmail("vova@test.com"));
+        Mono<Player> secondPlayer = playerService.create(player -> player.setEmail("antony@test.com"));
 
-        List<Player> createdPlayers = playerService.findAll().toStream()
-                .collect(Collectors.toList());
+        Flux
+                .concat(firstPlayer, secondPlayer)
+                .subscribe(tuple -> {
+                    List<Player> createdPlayers = playerService.findAll().toStream()
+                            .collect(Collectors.toList());
 
-        List<PlayerDTO> expectedResponse = createdPlayers.stream()
-                .map(PlayerDTO::of)
-                .collect(Collectors.toList());
+                    List<PlayerDTO> expectedResponse = createdPlayers.stream()
+                            .map(PlayerDTO::of)
+                            .collect(Collectors.toList());
 
-        getWebTestClient().get().uri("/api/v1/players")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(PlayerDTO.class)
-                .hasSize(NumberUtils.INTEGER_TWO)
-                .isEqualTo(expectedResponse);
+                    getWebTestClient().get().uri("/api/v1/players")
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBodyList(PlayerDTO.class)
+                            .hasSize(NumberUtils.INTEGER_TWO)
+                            .isEqualTo(expectedResponse);
+                });
     }
 
     @Test

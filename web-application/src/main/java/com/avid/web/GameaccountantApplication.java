@@ -1,7 +1,7 @@
 package com.avid.web;
 
-import com.avid.web.config.web.ApplicationBeanInitializer;
-import com.avid.web.config.web.AksoCorsConfig;
+import com.avid.web.system.config.web.ApplicationBeanInitializer;
+import com.avid.web.system.config.web.AksoCorsConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
