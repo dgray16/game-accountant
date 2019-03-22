@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * - Implement Solr on Heroku
  * - Fix documentation on Heroku
  * - Programmatic transaction manager
+ * - Pythia (https://github.com/VirgilSecurity/virgil-pythia-java)
  */
 @SpringBootApplication
 @EnableConfigurationProperties(value = {
