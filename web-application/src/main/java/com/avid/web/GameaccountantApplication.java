@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * - Fix documentation on Heroku
  * - Programmatic transaction manager
  * - Pythia (https://github.com/VirgilSecurity/virgil-pythia-java)
+ * - MapStruct ( http://mapstruct.org/ )
  */
 @SpringBootApplication
 @EnableConfigurationProperties(value = {
