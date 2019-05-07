@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @ConfigurationProperties(value = "game.cors.http")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AksoCorsConfig {
+public class GameCorsConfig {
 
     List<String> allowedOrigins = new ArrayList<>();
     List<String> allowedMethods = new ArrayList<>();

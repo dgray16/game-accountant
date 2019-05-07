@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
- * TestClass for {@link GameController}.
+ * Test class for {@link GameController}.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GameTest extends EmbeddedMongoTest {

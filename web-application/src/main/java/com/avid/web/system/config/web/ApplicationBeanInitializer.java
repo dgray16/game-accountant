@@ -37,11 +37,12 @@ public class ApplicationBeanInitializer implements ApplicationContextInitializer
                 ServerRequestHelper.class,
                 () -> new ServerRequestHelper(
                         context.getBean(ObjectMapper.class), Validation.buildDefaultValidatorFactory().getValidator()
-                )
+                ),
+                customizer -> customizer.setLazyInit(true)
         );
 
-        context.registerBean(GameController.class);
-        context.registerBean(PlayerController.class);
+        registerLazyBean(context, GameController.class);
+        registerLazyBean(context, PlayerController.class);
 
         context.registerBean(
                 RouterFunction.class,
@@ -50,26 +51,31 @@ public class ApplicationBeanInitializer implements ApplicationContextInitializer
 
                     return context.getBean(GameController.class).defineRouter(converter)
                             .and(context.getBean(PlayerController.class).defineRouter(converter));
-                }
+                },
+                customizer -> customizer.setLazyInit(true)
         );
     }
 
     private void registerDatabaseServices(GenericApplicationContext context) {
-        context.registerBean(PlayerService.class);
-        context.registerBean(GameService.class);
+        registerLazyBean(context, PlayerService.class);
+        registerLazyBean(context, GameService.class);
     }
 
     private void registerSolrServices(GenericApplicationContext context) {
-        context.registerBean(SolrGameService.class);
+        registerLazyBean(context, SolrGameService.class);
     }
 
     private void registerWebServices(GenericApplicationContext context) {
-        context.registerBean(GameWebService.class);
-        context.registerBean(PlayerWebService.class);
+        registerLazyBean(context, GameWebService.class);
+        registerLazyBean(context, PlayerWebService.class);
     }
 
     private void registerAdditionalServices(GenericApplicationContext context) {
-        context.registerBean(PermissionService.class);
+        registerLazyBean(context, PermissionService.class);
+    }
+
+    private void registerLazyBean(GenericApplicationContext context, Class<?> classType) {
+        context.registerBean(classType, customizer -> customizer.setLazyInit(true));
     }
 
 }

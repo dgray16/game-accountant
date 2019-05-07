@@ -1,7 +1,7 @@
 package com.avid.web;
 
 import com.avid.web.system.config.web.ApplicationBeanInitializer;
-import com.avid.web.system.config.web.AksoCorsConfig;
+import com.avid.web.system.config.web.GameCorsConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,7 +22,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  */
 @SpringBootApplication
 @EnableConfigurationProperties(value = {
-        AksoCorsConfig.class
+        GameCorsConfig.class
 })
 @EnableReactiveMongoRepositories(basePackages = "com.avid.core.domain.repository")
 public class GameaccountantApplication {

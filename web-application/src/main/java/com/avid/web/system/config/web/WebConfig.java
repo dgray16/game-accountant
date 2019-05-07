@@ -29,7 +29,7 @@ public class WebConfig implements WebFluxConfigurer {
 
     static final MediaType[] mediaTypes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_STREAM_JSON };
 
-    AksoCorsConfig corsConfig;
+    GameCorsConfig corsConfig;
 
     @Override
     public void addCorsMappings(org.springframework.web.reactive.config.CorsRegistry registry) {
