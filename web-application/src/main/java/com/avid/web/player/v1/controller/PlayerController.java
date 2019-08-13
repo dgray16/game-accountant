@@ -6,7 +6,7 @@ import com.avid.web.player.v1.model.PlayerDTO;
 import com.avid.web.player.v1.service.PlayerWebService;
 import com.avid.web.system.security.PermissionService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +20,8 @@ import reactor.core.publisher.Mono;
 import java.util.function.Supplier;
 
 @ResponseBody
-@AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PlayerController implements FunctionalController {
 
     PlayerWebService playerWebService;

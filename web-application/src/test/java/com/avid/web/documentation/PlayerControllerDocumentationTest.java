@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
+import reactor.test.StepVerifier;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PlayerControllerDocumentationTest extends EmbeddedMongoDocumentationTest {
@@ -21,20 +22,23 @@ public class PlayerControllerDocumentationTest extends EmbeddedMongoDocumentatio
     public void testGetPlayers() {
         Player player = new Player();
         player.setEmail("vova@player.com");
-        playerService.create(player).block();
 
-        getWebTestClient().get().uri("/api/v1/players")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(PlayerDTO.class)
-                .consumeWith(
-                        WebTestClientRestDocumentation.document(
-                                generateDocumentName("get-players"),
-                                PayloadDocumentation.responseFields(
-                                        PayloadDocumentation.fieldWithPath("[].email").description("Email of Player")
+        StepVerifier
+                .create(playerService.create(player))
+                .expectSubscription()
+                .then(() -> getWebTestClient().get().uri("/api/v1/players")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBodyList(PlayerDTO.class)
+                        .consumeWith(
+                                WebTestClientRestDocumentation.document(
+                                        generateDocumentName("get-players"),
+                                        PayloadDocumentation.responseFields(
+                                                PayloadDocumentation.fieldWithPath("[].email").description("Email of Player")
+                                        )
                                 )
                         )
-                );
+        );
     }
 
     @Override

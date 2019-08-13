@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.test.StepVerifier;
 
 import java.util.List;
 
@@ -28,35 +29,40 @@ public class GameTest extends EmbeddedMongoTest {
         Game game = new Game();
         game.setName("PUBG");
         game.setGenres(List.of(GameGenre.SHOOTER, GameGenre.SURVIVAL));
-        gameService.create(game).subscribe();
 
-        GameDTO expectedResponse = new GameDTO();
-        expectedResponse.setGameGenres(game.getGenres());
-        expectedResponse.setName(game.getName());
+        StepVerifier
+                .create(gameService.create(game).log("Game created"))
+                .expectSubscription()
+                .then(() -> {
+                    GameDTO expectedResponse = new GameDTO();
+                    expectedResponse.setGameGenres(game.getGenres());
+                    expectedResponse.setName(game.getName());
 
-        getWebTestClient().get().uri("/api/v1/games")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(GameDTO.class)
-                .hasSize(NumberUtils.INTEGER_ONE)
-                .isEqualTo(List.of(expectedResponse));
+                    getWebTestClient().get().uri("/api/v1/games")
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBodyList(GameDTO.class)
+                            .hasSize(NumberUtils.INTEGER_ONE)
+                            .isEqualTo(List.of(expectedResponse));
+                });
     }
 
     @Test
     public void testGetGame() {
-        gameService.create(game -> {
-           game.setName("Resident Evil 2");
-           game.setGenres(List.of(GameGenre.SURVIVAL));
-        }).subscribe(createdGame -> {
-            GameDTO expectedResponse = GameDTO.of(createdGame);
+        gameService
+                .create(game -> {
+                    game.setName("Resident Evil 2");
+                    game.setGenres(List.of(GameGenre.SURVIVAL));
+                })
+                .subscribe(createdGame -> {
+                    GameDTO expectedResponse = GameDTO.of(createdGame);
 
-            getWebTestClient().get().uri("/api/v1/games/{0}", createdGame.getId().toHexString())
-                    .exchange()
-                    .expectStatus().isOk()
-                    .expectBody(GameDTO.class)
-                    .isEqualTo(expectedResponse);
-
-        });
+                    getWebTestClient().get().uri("/api/v1/games/{0}", createdGame.getId().toHexString())
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody(GameDTO.class)
+                            .isEqualTo(expectedResponse);
+                });
     }
 
 }

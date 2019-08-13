@@ -30,7 +30,7 @@ public class ApplicationInitializer implements ApplicationListener<ApplicationRe
     PlayerService playerService;
     GameService gameService;
 
-    SolrGameService solrGameService;
+    //SolrGameService solrGameService; TODO enable in future
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -55,7 +55,7 @@ public class ApplicationInitializer implements ApplicationListener<ApplicationRe
     private void createGames() {
         gameService.findAll().hasElements().subscribe(value -> {
             
-            solrGameService.deleteData();
+            /*solrGameService.deleteData();*/
 
             if (BooleanUtils.isFalse(value)) {
                 Game game1 = new Game();
@@ -65,7 +65,7 @@ public class ApplicationInitializer implements ApplicationListener<ApplicationRe
                 gameService
                         .create(game1)
                         .map(SolrGame::of)
-                        .subscribe(solrGameService::createIndex);
+                        .subscribe(/*solrGameService::createIndex*/);
 
                 Game game2 = new Game();
                 game2.setName("Hitman: Absolution");
@@ -74,7 +74,7 @@ public class ApplicationInitializer implements ApplicationListener<ApplicationRe
                 gameService
                         .create(game2)
                         .map(SolrGame::of)
-                        .subscribe(solrGameService::createIndex);
+                        .subscribe(/*solrGameService::createIndex*/);
             }
         });
     }

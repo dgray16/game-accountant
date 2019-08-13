@@ -28,7 +28,7 @@ public class ApplicationBeanInitializer implements ApplicationContextInitializer
         registerDatabaseServices(applicationContext);
         registerWebServices(applicationContext);
         registerControllers(applicationContext);
-        registerSolrServices(applicationContext);
+        //registerSolrServices(applicationContext);
         registerAdditionalServices(applicationContext);
     }
 
@@ -61,9 +61,9 @@ public class ApplicationBeanInitializer implements ApplicationContextInitializer
         registerLazyBean(context, GameService.class);
     }
 
-    private void registerSolrServices(GenericApplicationContext context) {
+    /*private void registerSolrServices(GenericApplicationContext context) {
         registerLazyBean(context, SolrGameService.class);
-    }
+    }*/
 
     private void registerWebServices(GenericApplicationContext context) {
         registerLazyBean(context, GameWebService.class);

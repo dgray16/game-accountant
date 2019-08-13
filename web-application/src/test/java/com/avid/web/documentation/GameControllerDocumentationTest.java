@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
+import reactor.test.StepVerifier;
 
 import java.util.List;
 
@@ -26,21 +27,24 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
         Game game = new Game();
         game.setName("PUBG");
         game.setGenres(List.of(GameGenre.SHOOTER, GameGenre.SURVIVAL));
-        gameService.create(game).block();
 
-        getWebTestClient().get().uri("/api/v1/games")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(GameDTO.class)
-                .consumeWith(
-                        WebTestClientRestDocumentation.document(
-                                generateDocumentName("get-games"),
-                                PayloadDocumentation.responseFields(
-                                        PayloadDocumentation.fieldWithPath("[].name").description("Name of the Game"),
-                                        PayloadDocumentation.fieldWithPath("[].gameGenres").description(generateEnumValuesDescription(GameGenre.values()))
-                                ),
-                                RequestDocumentation.requestParameters(
-                                        RequestDocumentation.parameterWithName("query").description("Name of Game for search").optional()
+        StepVerifier
+                .create(gameService.create(game))
+                .expectSubscription()
+                .then(() -> getWebTestClient().get().uri("/api/v1/games")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBodyList(GameDTO.class)
+                        .consumeWith(
+                                WebTestClientRestDocumentation.document(
+                                        generateDocumentName("get-games"),
+                                        PayloadDocumentation.responseFields(
+                                                PayloadDocumentation.fieldWithPath("[].name").description("Name of the Game"),
+                                                PayloadDocumentation.fieldWithPath("[].gameGenres").description(generateEnumValuesDescription(GameGenre.values()))
+                                        ),
+                                        RequestDocumentation.requestParameters(
+                                                RequestDocumentation.parameterWithName("query").description("Name of Game for search").optional()
+                                        )
                                 )
                         )
                 );

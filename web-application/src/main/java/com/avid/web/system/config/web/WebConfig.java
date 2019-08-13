@@ -27,7 +27,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WebConfig implements WebFluxConfigurer {
 
-    static final MediaType[] mediaTypes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_STREAM_JSON };
+    private static final MediaType[] mediaTypes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_STREAM_JSON };
 
     GameCorsConfig corsConfig;
 
@@ -64,7 +64,7 @@ public class WebConfig implements WebFluxConfigurer {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 
         /* If value is null, we do not include it in JSON */
-        builder.serializationInclusion(JsonInclude.Include.NON_NULL);
+        builder.serializationInclusion(JsonInclude.Include.NON_EMPTY);
 
         /* Write dates in Date ISO format */
         builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

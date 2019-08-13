@@ -10,18 +10,18 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 /**
  * @see <a href="https://www.baeldung.com/spring-data-solr">Apache Solr</a>
  */
-@Configuration
-@EnableSolrRepositories(basePackages = { "com.avid.web.solr" })
+//@Configuration    TODO enable in future
+/*@EnableSolrRepositories(basePackages = { "com.avid.web.solr" })*/
 public class SolrConfig {
 
-    @Bean
+    /*@Bean*/
     public SolrClient solrClient() {
         return new HttpSolrClient
                 .Builder("http://localhost:8983/solr/")
                 .build();
     }
 
-    @Bean
+    /*@Bean*/
     public SolrTemplate solrTemplate(SolrClient solrClient) {
         return new SolrTemplate(solrClient);
     }
