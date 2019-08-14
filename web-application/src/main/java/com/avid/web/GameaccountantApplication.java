@@ -12,14 +12,11 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * - Micrometer / Actuator / Grafana
  * - OAuth2 Authorization / WebAuthn
  * - Logstash / Sentry
- * - Remove default user org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration#getOrDeducePassword(org.springframework.boot.autoconfigure.security.SecurityProperties.User, org.springframework.security.crypto.password.PasswordEncoder)
- * - Jigsaw ( https://www.youtube.com/watch?v=wX0zhalTgzQ -- https://www.youtube.com/watch?v=UFBH7gHJkb4 ) For some reason Lombok still does not work with modules properly (JDK12)
+ * - Jigsaw ( https://www.youtube.com/watch?v=wX0zhalTgzQ -- https://www.youtube.com/watch?v=UFBH7gHJkb4 ) For some reason Intellij cannot compile modularized app (JDK12); codehaus container jar is not working.
  * - Implement Solr on Heroku
  * - Fix documentation on Heroku
- * - Programmatic transaction manager
  * - Pythia (https://github.com/VirgilSecurity/virgil-pythia-java)
- * - RSocket
- * - ProtoBuf
+ * - Bump up security ( https://github.com/ace0/Security101 )
  */
 @SpringBootApplication
 @EnableConfigurationProperties(value = {

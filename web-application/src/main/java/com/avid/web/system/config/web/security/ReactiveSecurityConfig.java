@@ -1,4 +1,4 @@
-package com.avid.web.system.config.web;
+package com.avid.web.system.config.web.security;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,4 +35,5 @@ public class ReactiveSecurityConfig {
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
 }
