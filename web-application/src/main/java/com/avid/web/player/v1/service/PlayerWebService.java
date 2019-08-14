@@ -1,7 +1,8 @@
 package com.avid.web.player.v1.service;
 
 import com.avid.core.domain.service.PlayerService;
-import com.avid.web.player.v1.model.PlayerDTO;
+import com.avid.web.player.v1.model.dto.PlayerDto;
+import com.avid.web.player.v1.model.mapper.PlayerDtoMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,12 +18,12 @@ public class PlayerWebService {
     PlayerService playerService;
 
     @Transactional(readOnly = true)
-    public Flux<PlayerDTO> getPlayers() {
-        return playerService.findAll().map(PlayerDTO::of);
+    public Flux<PlayerDto> getPlayers() {
+        return playerService.findAll().map(PlayerDtoMapper.INSTANCE::map);
     }
 
     @Transactional(readOnly = true)
-    public Mono<PlayerDTO> getPlayer(ObjectId playerId) {
-        return playerService.findById(playerId).map(PlayerDTO::of);
+    public Mono<PlayerDto> getPlayer(ObjectId playerId) {
+        return playerService.findById(playerId).map(PlayerDtoMapper.INSTANCE::map);
     }
 }

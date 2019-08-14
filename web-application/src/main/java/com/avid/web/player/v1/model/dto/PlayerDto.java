@@ -1,6 +1,5 @@
-package com.avid.web.player.v1.model;
+package com.avid.web.player.v1.model.dto;
 
-import com.avid.core.domain.model.entity.Player;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +8,15 @@ import lombok.experimental.FieldDefaults;
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PlayerDTO {
+public class PlayerDto {
 
     String email;
 
-    public static PlayerDTO of(Player player) {
+    /*public static PlayerDTO of(Player player) {
         PlayerDTO dto = new PlayerDTO();
 
         dto.setEmail(player.getEmail());
 
         return dto;
-    }
+    }*/
 }

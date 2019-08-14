@@ -2,7 +2,7 @@ package com.avid.web.player.v1.controller;
 
 import com.avid.web.system.functional.FunctionalController;
 import com.avid.web.system.functional.ServerRequestHelper;
-import com.avid.web.player.v1.model.PlayerDTO;
+import com.avid.web.player.v1.model.dto.PlayerDto;
 import com.avid.web.player.v1.service.PlayerWebService;
 import com.avid.web.system.security.PermissionService;
 import lombok.AccessLevel;
@@ -41,12 +41,12 @@ public class PlayerController implements FunctionalController {
     }
 
     private Mono<ServerResponse> getPlayers() {
-        return ServerResponse.ok().body(playerWebService.getPlayers(), PlayerDTO.class);
+        return ServerResponse.ok().body(playerWebService.getPlayers(), PlayerDto.class);
     }
 
     private Mono<ServerResponse> getPlayer(ServerRequest request) {
         ObjectId playerId = new ObjectId(request.pathVariable("id"));
-        return ServerResponse.ok().body(playerWebService.getPlayer(playerId), PlayerDTO.class);
+        return ServerResponse.ok().body(playerWebService.getPlayer(playerId), PlayerDto.class);
     }
 
 }

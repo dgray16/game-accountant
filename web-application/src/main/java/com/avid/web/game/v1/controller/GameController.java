@@ -2,7 +2,7 @@ package com.avid.web.game.v1.controller;
 
 import com.avid.web.system.functional.FunctionalController;
 import com.avid.web.system.functional.ServerRequestHelper;
-import com.avid.web.game.v1.model.dto.GameDTO;
+import com.avid.web.game.v1.model.dto.GameDto;
 import com.avid.web.game.v1.model.request.GetGamesRequest;
 import com.avid.web.game.v1.service.GameWebService;
 import lombok.AccessLevel;
@@ -49,12 +49,12 @@ public class GameController implements FunctionalController {
     }
 
     private Mono<ServerResponse> getGames(@Validated GetGamesRequest request) {
-        return ServerResponse.ok().body(gameWebService.getGames(request), GameDTO.class);
+        return ServerResponse.ok().body(gameWebService.getGames(request), GameDto.class);
     }
 
     private Mono<ServerResponse> getGame(ServerRequest request) {
         ObjectId id = new ObjectId(request.pathVariable("id"));
-        return ServerResponse.ok().body(gameWebService.getGame(id), GameDTO.class);
+        return ServerResponse.ok().body(gameWebService.getGame(id), GameDto.class);
     }
 
     /*@DeleteMapping(value = "/api/v1/game/{id}")*/

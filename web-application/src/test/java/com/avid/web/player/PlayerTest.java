@@ -3,7 +3,8 @@ package com.avid.web.player;
 import com.avid.core.domain.model.entity.Player;
 import com.avid.core.domain.service.PlayerService;
 import com.avid.web.base.EmbeddedMongoTest;
-import com.avid.web.player.v1.model.PlayerDTO;
+import com.avid.web.player.v1.model.dto.PlayerDto;
+import com.avid.web.player.v1.model.mapper.PlayerDtoMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -32,14 +33,14 @@ public class PlayerTest extends EmbeddedMongoTest {
                     List<Player> createdPlayers = playerService.findAll().toStream()
                             .collect(Collectors.toList());
 
-                    List<PlayerDTO> expectedResponse = createdPlayers.stream()
-                            .map(PlayerDTO::of)
+                    List<PlayerDto> expectedResponse = createdPlayers.stream()
+                            .map(PlayerDtoMapper.INSTANCE::map)
                             .collect(Collectors.toList());
 
                     getWebTestClient().get().uri("/api/v1/players")
                             .exchange()
                             .expectStatus().isOk()
-                            .expectBodyList(PlayerDTO.class)
+                            .expectBodyList(PlayerDto.class)
                             .hasSize(NumberUtils.INTEGER_TWO)
                             .isEqualTo(expectedResponse);
                 });
@@ -50,12 +51,12 @@ public class PlayerTest extends EmbeddedMongoTest {
         playerService
                 .create(player -> player.setEmail("dunkan@dragon.age"))
                 .subscribe(createdPlayer -> {
-                    PlayerDTO expectedResponse = PlayerDTO.of(createdPlayer);
+                    PlayerDto expectedResponse = PlayerDtoMapper.INSTANCE.map(createdPlayer);
 
                     getWebTestClient().get().uri("/api/v1/players/{0}", createdPlayer.getId().toHexString())
                             .exchange()
                             .expectStatus().isOk()
-                            .expectBody(PlayerDTO.class)
+                            .expectBody(PlayerDto.class)
                             .isEqualTo(expectedResponse);
                 });
     }

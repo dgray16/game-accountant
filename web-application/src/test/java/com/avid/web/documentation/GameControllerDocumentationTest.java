@@ -4,7 +4,7 @@ import com.avid.core.domain.model.dictionary.GameGenre;
 import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.service.GameService;
 import com.avid.web.base.EmbeddedMongoDocumentationTest;
-import com.avid.web.game.v1.model.dto.GameDTO;
+import com.avid.web.game.v1.model.dto.GameDto;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class GameControllerDocumentationTest extends EmbeddedMongoDocumentationT
                 .then(() -> getWebTestClient().get().uri("/api/v1/games")
                         .exchange()
                         .expectStatus().isOk()
-                        .expectBodyList(GameDTO.class)
+                        .expectBodyList(GameDto.class)
                         .consumeWith(
                                 WebTestClientRestDocumentation.document(
                                         generateDocumentName("get-games"),

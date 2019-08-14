@@ -2,9 +2,9 @@ package com.avid.web.game.v1.service;
 
 import com.avid.core.domain.model.entity.Game;
 import com.avid.core.domain.service.GameService;
-import com.avid.web.game.v1.model.dto.GameDTO;
+import com.avid.web.game.v1.model.dto.GameDto;
+import com.avid.web.game.v1.model.mapper.GameDtoMapper;
 import com.avid.web.game.v1.model.request.GetGamesRequest;
-import com.avid.web.solr.service.SolrGameService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +22,7 @@ public class GameWebService {
 
     //SolrGameService solrGameService; TODO enable in future
 
-    public Flux<GameDTO> getGames(GetGamesRequest request) {
+    public Flux<GameDto> getGames(GetGamesRequest request) {
         Flux<Game> games = Flux.empty();
 
         if (request.isQueryPresent()) {
@@ -32,12 +32,12 @@ public class GameWebService {
             games = gameService.findAll();
         }
 
-        return games.map(GameDTO::of);
+        return games.map(GameDtoMapper.INSTANCE::map);
     }
 
-    public Mono<GameDTO> getGame(ObjectId id) {
+    public Mono<GameDto> getGame(ObjectId id) {
         log.debug("{}", gameService.findById(id));
-        return gameService.findById(id).map(GameDTO::of);
+        return gameService.findById(id).map(GameDtoMapper.INSTANCE::map);
     }
 
     /* TODO verify that tests are working with it */

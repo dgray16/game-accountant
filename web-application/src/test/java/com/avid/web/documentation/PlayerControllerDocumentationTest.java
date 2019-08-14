@@ -3,7 +3,7 @@ package com.avid.web.documentation;
 import com.avid.core.domain.model.entity.Player;
 import com.avid.core.domain.service.PlayerService;
 import com.avid.web.base.EmbeddedMongoDocumentationTest;
-import com.avid.web.player.v1.model.PlayerDTO;
+import com.avid.web.player.v1.model.dto.PlayerDto;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class PlayerControllerDocumentationTest extends EmbeddedMongoDocumentatio
                 .then(() -> getWebTestClient().get().uri("/api/v1/players")
                         .exchange()
                         .expectStatus().isOk()
-                        .expectBodyList(PlayerDTO.class)
+                        .expectBodyList(PlayerDto.class)
                         .consumeWith(
                                 WebTestClientRestDocumentation.document(
                                         generateDocumentName("get-players"),
