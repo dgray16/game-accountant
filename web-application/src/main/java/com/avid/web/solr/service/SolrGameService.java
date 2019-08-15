@@ -16,17 +16,17 @@ public class SolrGameService extends DefaultSolrService<SolrGame> {
 
     //SolrGameRepository solrGameRepository;
 
-    public SolrGameService(SolrGameRepository repository) {
+    /*public SolrGameService(SolrGameRepository repository) {
         super(repository);
-        //this.solrGameRepository = repository;
-    }
+        his.solrGameRepository = repository;
+    }*/
 
-    public Set<ObjectId> findGamesByName(String query) {
+    /*public Set<ObjectId> findGamesByName(String query) {
         List<SolrGame> foundGames = Collections.emptyList();//solrGameRepository.findAllByNameStartingWith(query);
         return foundGames.stream()
                 .map(SolrGame::getId)
                 .map(ObjectId::new)
                 .collect(Collectors.toSet());
-    }
+    }*/
 
 }

@@ -4,13 +4,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.bson.types.ObjectId;
-import org.springframework.data.solr.repository.SolrCrudRepository;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class DefaultSolrService<E> {
 
-    SolrCrudRepository<E, String> repository;
+    /*SolrCrudRepository<E, String> repository;
 
     public void createIndex(E document) {
         repository.save(document);
@@ -22,6 +21,6 @@ public abstract class DefaultSolrService<E> {
 
     public void removeIndex(ObjectId objectId) {
         repository.deleteById(objectId.toHexString());
-    }
+    }*/
 
 }

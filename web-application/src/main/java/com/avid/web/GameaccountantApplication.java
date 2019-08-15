@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 
 /**
  * TODO
- * - Micrometer / Actuator / Grafana
  * - OAuth2 Authorization / WebAuthn
  * - Logstash / Sentry
  * - Jigsaw ( https://www.youtube.com/watch?v=wX0zhalTgzQ -- https://www.youtube.com/watch?v=UFBH7gHJkb4 ) For some reason Intellij cannot compile modularized app (JDK12); codehaus container jar is not working.
@@ -30,4 +29,5 @@ public class GameaccountantApplication {
                 .initializers(new ApplicationBeanInitializer())
                 .run(args);
     }
+
 }

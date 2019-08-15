@@ -64,7 +64,7 @@ public class ApplicationInitializer implements ApplicationListener<ApplicationRe
 
                 gameService
                         .create(game1)
-                        .map(SolrGame::of)
+                        /*.map(SolrGame::of)*/
                         .subscribe(/*solrGameService::createIndex*/);
 
                 Game game2 = new Game();
@@ -73,7 +73,7 @@ public class ApplicationInitializer implements ApplicationListener<ApplicationRe
 
                 gameService
                         .create(game2)
-                        .map(SolrGame::of)
+                        /*.map(SolrGame::of)*/
                         .subscribe(/*solrGameService::createIndex*/);
             }
         });
