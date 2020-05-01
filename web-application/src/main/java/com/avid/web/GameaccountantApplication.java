@@ -16,8 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * - Fix documentation on Heroku
  * - Pythia (https://github.com/VirgilSecurity/virgil-pythia-java)
  * - Bump up security ( https://github.com/ace0/Security101 )
- * - Testcontainers instead of de.flapdoodle.embed.mongo
- * - JOOQ / QueryDSL in order to replace native queries
+ * - https://github.com/springdoc/springdoc-openapi
  */
 @SpringBootApplication
 @EnableConfigurationProperties(value = {
